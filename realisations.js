@@ -12,8 +12,7 @@
   //   (ne pas la remettre dans images).
   // photoIntro : facultatif, photo de la page 2 (face à la description) si elle doit
   //   être différente de la couverture.
-  // etiquette : facultatif, texte affiché en haut de la couverture à la place du secteur
-  //   (le filtre continue d'utiliser categorie).
+  // etiquette : facultatif, texte affiché en haut de la couverture à la place du secteur.
   // couverturePosition : facultatif, quelle partie de la photo garder sur la couverture
   //   (ex. 'center 85%' : on garde le bas, on coupe le haut).
   const PROJETS = [
@@ -39,6 +38,27 @@
       ],
     },
     {
+      titre: 'Norman',
+      lieu: '',
+      categorie: 'hotellerie',
+      texte: 'Projet d’hôtel conçu comme des appartements parisiens, avec des pièces de design et un mobilier éclectique.',
+      couverture: 'assets/realisations/norman/05.jpg',
+      images: [
+        'assets/realisations/norman/salon-vert.jpg',
+        'assets/realisations/norman/tete-de-lit.jpg',
+        'assets/realisations/norman/chambre.jpg',
+        'assets/realisations/norman/table-basse.jpg',
+        'assets/realisations/norman/chambre-lit-cuir.jpg',
+        ['assets/realisations/norman/chambre-rangements.jpg', 'assets/realisations/norman/coin-salon.jpg'],
+        'assets/realisations/norman/salon-escalier.jpg',
+        ['assets/realisations/norman/bar.jpg', 'assets/realisations/norman/restaurant.jpg'],
+        'assets/realisations/norman/02.jpg',
+        ['assets/realisations/norman/03.jpg', 'assets/realisations/norman/04.jpg'],
+        'assets/realisations/norman/01.jpg',
+        'assets/realisations/norman/06.jpg',
+      ],
+    },
+    {
       titre: 'VF Architecture',
       lieu: '',
       categorie: 'immobilier',
@@ -56,42 +76,39 @@
       ],
     },
     {
-      titre: 'Projet 5', // NOM À CONFIRMER
+      titre: 'Sainte-Maxime',
       lieu: '',
       categorie: 'immobilier',
-      texte: 'Texte de présentation du projet à venir : le contexte, la demande du client et les pièces réalisées par PHB70.',
+      texte: 'Projet d’ameublement sur mesure pour une villa contemporaine à Sainte-Maxime.',
       couverture: 'assets/realisations/projet-5/01.jpg',
       images: [
         ['assets/realisations/projet-5/02.jpg', 'assets/realisations/projet-5/03.jpg'],
-        'assets/realisations/projet-5/04.jpg',
+        'assets/realisations/projet-5/salle-a-manger.jpg',
         'assets/realisations/projet-5/05.jpg',
         ['assets/realisations/projet-5/06.jpg', 'assets/realisations/projet-5/07.jpg'],
+        'assets/realisations/projet-5/chambre.jpg',
+        'assets/realisations/projet-5/commode.jpg',
+        'assets/realisations/projet-5/chambre-suspensions.jpg',
+        'assets/realisations/projet-5/coin-fauteuil.jpg',
+        'assets/realisations/projet-5/salle-de-bain.jpg',
+        'assets/realisations/projet-5/vasque.jpg',
       ],
     },
     {
-      titre: 'Norman',
+      titre: 'Maison Heller',
       lieu: '',
       categorie: 'hotellerie',
-      texte: 'Texte de présentation du projet à venir : le contexte, la demande du client et les pièces réalisées par PHB70.',
-      couverture: 'assets/realisations/norman/05.jpg',
+      texte: 'Projet imaginé par Philippe Starck, qui nous a confié la réalisation de l’ensemble du mobilier sur mesure et de la menuiserie.',
+      couverture: 'assets/realisations/maison-heller/couverture.jpg',
       images: [
-        'assets/realisations/norman/02.jpg',
-        ['assets/realisations/norman/03.jpg', 'assets/realisations/norman/04.jpg'],
-        'assets/realisations/norman/01.jpg',
-        'assets/realisations/norman/06.jpg',
-      ],
-    },
-    {
-      titre: 'Projet 3', // NOM À CONFIRMER
-      lieu: '',
-      categorie: 'hotellerie',
-      texte: 'Texte de présentation du projet à venir : le contexte, la demande du client et les pièces réalisées par PHB70.',
-      couverture: 'assets/realisations/projet-3/01.jpg',
-      images: [
-        'assets/realisations/projet-3/02.jpg',
-        'assets/realisations/projet-3/03.jpg',
-        'assets/realisations/projet-3/04.jpg',
-        'assets/realisations/projet-3/05.jpg',
+        'assets/realisations/maison-heller/couloir.jpg',
+        ['assets/realisations/maison-heller/chambre-armoire.jpg', 'assets/realisations/maison-heller/chambre-bureau.jpg'],
+        'assets/realisations/maison-heller/table-de-chevet.jpg',
+        ['assets/realisations/maison-heller/dressing.jpg', 'assets/realisations/maison-heller/bureau-lampes.jpg'],
+        'assets/realisations/maison-heller/bar.jpg',
+        'assets/realisations/maison-heller/restaurant-vitraux.jpg',
+        'assets/realisations/maison-heller/bar-vitrail.jpg',
+        'assets/realisations/maison-heller/table-portrait.jpg',
       ],
     },
     {
@@ -139,44 +156,6 @@
         </button>
       </div>`).join('');
 
-  // ===== Filtres par secteur =====
-  const filterBtns = document.querySelectorAll('.filters__btn');
-  const filterList = document.querySelector('.filters__list');
-  const ink = document.querySelector('.filters__ink');
-
-  // Trait qui glisse sous le secteur choisi
-  function moveInk() {
-    const active = filterList.querySelector('.filters__btn.is-active .filters__name');
-    if (!active) return;
-    const listBox = filterList.getBoundingClientRect();
-    const box = active.getBoundingClientRect();
-    ink.style.width = `${box.width}px`;
-    ink.style.transform = `translateX(${box.left - listBox.left + filterList.scrollLeft}px)`;
-  }
-
-  function applyFilter(cat) {
-    filterBtns.forEach((b) => {
-      const active = b.dataset.filter === cat;
-      b.classList.toggle('is-active', active);
-      b.setAttribute('aria-pressed', active);
-      if (active && filterList.scrollWidth > filterList.clientWidth) {
-        b.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
-      }
-    });
-    moveInk();
-    document.querySelectorAll('.book-item').forEach((item) => {
-      item.hidden = cat !== 'tous' && item.dataset.cat !== cat;
-    });
-    layoutCabinet();
-  }
-  filterBtns.forEach((b) => b.addEventListener('click', () => applyFilter(b.dataset.filter)));
-  window.addEventListener('resize', moveInk);
-  // une fois la police chargée, les largeurs de texte sont justes
-  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => {
-    moveInk();
-    requestAnimationFrame(() => ink.classList.add('is-ready'));
-  });
-
   // ===== Bibliothèque en noyer : étagères continues =====
   // Chaque livre porte son morceau d'étagère. On indique à chacun sa colonne
   // (pour que le veinage du bois continue d'un livre à l'autre) et, au dernier
@@ -197,10 +176,6 @@
   }
   window.addEventListener('resize', layoutCabinet);
   layoutCabinet(); // dès le chargement de la page
-
-  // Filtre direct depuis un lien, ex. realisations.html?secteur=hotellerie
-  const fromUrl = new URLSearchParams(location.search).get('secteur');
-  if (fromUrl && CATEGORIES[fromUrl]) applyFilter(fromUrl);
 
   // ===== Visionneuse : livre en grand, pages qui se tournent =====
   const viewer = document.getElementById('viewer');

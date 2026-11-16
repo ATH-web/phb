@@ -1,12 +1,10 @@
-// Page Sur Mesure : pièces personnalisées, présentées de 2 façons (onglets temporaires
-// pour comparer : disposition 5 triptyque, disposition 2 points de détail). Toutes les dispositions sont générées à partir de la liste PIECES.
+// Page Sur Mesure : pièces personnalisées, présentées en triptyque (la pièce · vue arrière + détail),
+// générées à partir de la liste PIECES.
 (function () {
   // ===== Liste des pièces (SIMULATION : textes et caractéristiques à remplacer) =====
-  // demande : ce que le client voulait, en une phrase
-  // caracteristiques, planche, texture, projet : plus affichés pour l'instant (gardés pour plus tard)
+  // demande, details, caracteristiques, planche, texture, projet : plus affichés pour l'instant (gardés pour plus tard)
   // nuancier : matériaux choisis par le client (pastilles)
-  // texte : court paragraphe de présentation (disposition 5)
-  // details : points sur la photo, x et y en % de l'image (0,0 = coin haut gauche)
+  // texte : court paragraphe de présentation
   const PIECES = [
     {
       nom: 'Fauteuil Arceau',
@@ -159,6 +157,35 @@
       ],
     },
     {
+      nom: 'Chaise Terracotta', // NOM À CONFIRMER
+      projet: 'Projet à confirmer',
+      secteur: 'Restauration', // À CONFIRMER
+      image: 'assets/sur-mesure/chaise-terracotta/vue-face.jpg',
+      triptyque: [
+        { src: 'assets/sur-mesure/chaise-terracotta/vue-face.jpg', legende: 'La pièce' },
+        { src: 'assets/sur-mesure/chaise-terracotta/vue-arriere.jpg', legende: 'Vue arrière' },
+        { src: 'assets/sur-mesure/chaise-terracotta/detail.jpg', legende: 'Le détail' },
+      ],
+      demande: 'Une chaise de salle enveloppante, en velours chaud, avec un piètement qui rappelle le mobilier classique.',
+      caracteristiques: {
+        'Matériaux': 'Hêtre massif, velours',
+        'Finitions': 'Laque noire mate, passepoil ton sur ton',
+        'Dimensions': 'À confirmer',
+      },
+      planche: '',
+      nuancier: [
+        { nom: 'Velours terracotta', couleur: '#b5644a', texture: 'tissu' },
+        { nom: 'Laque noire mate', couleur: '#1d1b1a', texture: 'bois' },
+        { nom: 'Passepoil ton sur ton', couleur: '#a8573f', texture: 'cuir' },
+      ],
+      texte: 'Un dossier haut aux oreilles échancrées qui enveloppe sans enfermer, habillé de velours terracotta et souligné d\u2019un passepoil. Pieds sabre cannelés en laque noire, ceinture marquée de dés sculptés aux angles.',
+      details: [
+        { x: 50, y: 25, titre: 'Dossier échancré', texte: 'Oreilles creusées en arc, pour un maintien sans lourdeur.' },
+        { x: 50, y: 58, titre: 'Passepoil', texte: 'Un fin cordon ton sur ton qui dessine chaque volume.' },
+        { x: 40, y: 85, titre: 'Pieds cannelés', texte: 'Pieds sabre cannelés, dés sculptés aux angles de la ceinture.' },
+      ],
+    },
+    {
       nom: 'Table Colonnes',
       projet: 'Luteca',
       secteur: 'Restauration',
@@ -239,7 +266,7 @@
       nom: 'Commode Mosaïque',
       projet: 'Projet 3',
       secteur: 'Hôtellerie',
-      image: 'assets/realisations/projet-3/02.jpg',
+      image: 'assets/realisations/maison-heller/02.jpg',
       demande: 'Un meuble de rangement qui devienne la pièce forte de la suite, avec une façade travaillée comme une sculpture.',
       caracteristiques: {
         'Matériaux': 'Chêne massif et placage chêne',
@@ -264,7 +291,7 @@
       nom: 'Tête de lit Palissandre',
       projet: 'Projet 3',
       secteur: 'Hôtellerie',
-      image: 'assets/realisations/projet-3/03.jpg',
+      image: 'assets/realisations/maison-heller/03.jpg',
       demande: 'Une tête de lit chaleureuse qui intègre l’éclairage et les chevets, sans un seul fil apparent.',
       caracteristiques: {
         'Matériaux': 'Placage palissandre, cuir pleine fleur, laiton',
@@ -316,31 +343,13 @@
   const esc = (str) => String(str).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const num = (i) => String(i + 1).padStart(2, '0');
 
-  // Petits morceaux réutilisés dans les dispositions
+  // Pastilles des matériaux
   const swatchesHTML = (p) => `
     <ul class="sm-swatches" aria-label="Matériaux choisis">
       ${p.nuancier.map((n) => `<li><span class="sm-swatches__chip" style="background:${esc(n.couleur)}"></span>${esc(n.nom)}</li>`).join('')}
     </ul>`;
-  const pinsHTML = (p) => p.details.map((d, k) => `
-    <button class="sm-pin" type="button" style="left:${d.x}%; top:${d.y}%" data-detail="${k}" aria-label="Détail ${k + 1} : ${esc(d.titre)}">${k + 1}</button>`).join('');
-  const detailsListHTML = (p) => `
-    <ol class="sm-detail-list">
-      ${p.details.map((d, k) => `<li data-detail="${k}"><span class="sm-detail-list__num">${k + 1}</span><div><strong>${esc(d.titre)}</strong><p>${esc(d.texte)}</p></div></li>`).join('')}
-    </ol>`;
 
-  // Relie les points de la photo et la liste des détails (survol / clic → mise en avant)
-  function linkPins(scope) {
-    const items = scope.querySelectorAll('[data-detail]');
-    const highlight = (k) => items.forEach((el) => el.classList.toggle('is-active', el.dataset.detail === k));
-    items.forEach((el) => {
-      el.addEventListener('mouseenter', () => highlight(el.dataset.detail));
-      el.addEventListener('focus', () => highlight(el.dataset.detail));
-      el.addEventListener('click', () => highlight(el.dataset.detail));
-    });
-    scope.addEventListener('mouseleave', () => highlight(null));
-  }
-
-  // ===== Disposition 5 : triptyque (la pièce · vue arrière + détail empilés) =====
+  // ===== Triptyque (la pièce · vue arrière + détail empilés) =====
   // Seules les pièces qui ont un "triptyque" apparaissent ici.
   const triptyques = document.getElementById('view-triptyque');
   const tripFig = (p, t) => `
@@ -387,7 +396,7 @@
     col.style.gridTemplateColumns = '';
     const gap = parseFloat(getComputedStyle(box).columnGap) || 0;
     const total = box.clientWidth;
-    if (!total) return; // onglet masqué : recalculé à l'affichage
+    if (!total) return;
     const right = (total - gap - a * gap) / (a * (1 / b + 1 / c) + 1);
     box.style.gridTemplateColumns = `${total - gap - right}px ${right}px`;
   }
@@ -399,64 +408,4 @@
   });
   window.addEventListener('resize', () => triptyques.querySelectorAll('.sm-trip').forEach(fitTrip));
 
-  // ===== Disposition 2 : points de détail =====
-  const detailsNav = document.querySelector('.sm-details__nav');
-  const detailsFigure = document.querySelector('.sm-details__figure');
-  const detailsPanel = document.querySelector('.sm-details__panel');
-  detailsNav.innerHTML = PIECES.map((p, i) => `
-    <button class="sm-details__thumb${i === 0 ? ' is-active' : ''}" type="button" data-index="${i}" aria-pressed="${i === 0}">
-      <img src="${esc(p.image)}" alt="" loading="lazy">
-      <span>${esc(p.nom)}</span>
-    </button>`).join('');
-
-  function showPiece(i) {
-    const p = PIECES[i];
-    detailsNav.querySelectorAll('.sm-details__thumb').forEach((b) => {
-      const active = Number(b.dataset.index) === i;
-      b.classList.toggle('is-active', active);
-      b.setAttribute('aria-pressed', active);
-    });
-    detailsFigure.innerHTML = `
-      <div class="sm-pinned">
-        <img src="${esc(p.image)}" alt="${esc(p.nom)}">
-        ${pinsHTML(p)}
-      </div>`;
-    detailsPanel.innerHTML = `
-      <p class="sm-eyebrow">Pièce ${num(i)} · ${esc(p.secteur)}</p>
-      <h2 class="sm-title">${esc(p.nom)}</h2>
-      <p class="sm-demande sm-demande--plain">${esc(p.demande)}</p>
-      ${detailsListHTML(p)}
-      ${swatchesHTML(p)}`;
-    linkPins(document.getElementById('view-details'));
-  }
-  detailsNav.addEventListener('click', (e) => {
-    const b = e.target.closest('.sm-details__thumb');
-    if (b) showPiece(Number(b.dataset.index));
-  });
-  showPiece(0);
-
-  // ===== Onglets (temporaire, pour comparer les dispositions) =====
-  const tabs = document.querySelectorAll('.view-tabs__btn');
-  function selectTab(btn) {
-    tabs.forEach((b) => {
-      const active = b === btn;
-      b.classList.toggle('is-active', active);
-      b.setAttribute('aria-selected', active);
-      b.tabIndex = active ? 0 : -1;
-      document.getElementById(b.getAttribute('aria-controls')).hidden = !active;
-    });
-    window.dispatchEvent(new Event('resize')); // recale le triptyque s'il vient d'apparaître
-  }
-  tabs.forEach((btn, i) => {
-    btn.addEventListener('click', () => selectTab(btn));
-    btn.addEventListener('keydown', (e) => {
-      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-      const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length];
-      selectTab(next);
-      next.focus();
-    });
-  });
-  // Ouvrir directement une disposition, ex. sur-mesure.html?vue=details
-  const vue = document.getElementById(`vtab-${new URLSearchParams(location.search).get('vue')}`);
-  if (vue) selectTab(vue);
 })();

@@ -38,25 +38,8 @@
       <p class="method-intro__text">Chaque meuble part de vos envies : vos dimensions, vos essences de bois, vos tissus, vos finitions. Voici quelques pièces dessinées et fabriquées pour nos clients, et ce qui les rend uniques.</p>
     </section>
 
-    <!-- Onglets pour comparer les dispositions (temporaire) -->
-    <div class="sm-bar">
-      <div class="view-tabs" role="tablist" aria-label="Choix de la disposition">
-        <button class="view-tabs__btn is-active" role="tab" id="vtab-triptyque" aria-controls="view-triptyque" aria-selected="true">Disposition 5 · Triptyque</button>
-        <button class="view-tabs__btn" role="tab" id="vtab-details" aria-controls="view-details" aria-selected="false" tabindex="-1">Disposition 2 · Points de détail</button>
-      </div>
-    </div>
-
-    <!-- Disposition 5 : la pièce de face, vue arrière + détail empilés, puis texte -->
-    <section class="sm-triptyque" id="view-triptyque" role="tabpanel" aria-labelledby="vtab-triptyque"></section>
-
-    <!-- Disposition 2 : une pièce à la fois, points cliquables sur la photo -->
-    <section class="sm-details" id="view-details" role="tabpanel" aria-labelledby="vtab-details" hidden>
-      <nav class="sm-details__nav" aria-label="Choisir une pièce"></nav>
-      <div class="sm-details__stage">
-        <figure class="sm-details__figure"></figure>
-        <div class="sm-details__panel" aria-live="polite"></div>
-      </div>
-    </section>
+    <!-- Pièces : la pièce de face, vue arrière + détail empilés, puis texte (générées par sur-mesure.js) -->
+    <section class="sm-triptyque" id="view-triptyque" aria-label="Pièces sur mesure"></section>
 
     <!-- Appel à l'action commun -->
     <section class="sm-cta">

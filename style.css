@@ -527,7 +527,7 @@ body {
   box-shadow: 0 32px 70px rgba(0, 0, 0, 0.45);
 }
 
-/* Bloc texte en bas de la carte : titre + "Découvrir" */
+/* Bloc texte en bas de la carte : titre */
 .card__content {
   position: absolute;
   left: 24px;
@@ -542,7 +542,7 @@ body {
   letter-spacing: 0.05em;
 }
 
-/* Toute la carte est un lien vers les réalisations filtrées */
+/* Toute la carte est un lien vers les réalisations */
 a.card {
   display: block;
   color: inherit;
@@ -552,13 +552,6 @@ a.card {
 a.card:focus-visible {
   outline: 2px solid #111;
   outline-offset: 4px;
-}
-
-.card__more {
-  display: inline-block;
-  margin-top: 8px;
-  font-size: 0.95rem;
-  letter-spacing: 0.05em;
 }
 
 
@@ -1695,84 +1688,6 @@ a.card:focus-visible {
    ===== Page Réalisations : livres de projets =====
    ===================================================================== */
 
-/* Barre au-dessus des livres : filtres */
-.projects-bar {
-  width: min(1300px, calc(100% - 80px));
-  margin: 0 auto 56px;
-}
-
-/* Filtres par secteur : petites capitales espacées, un trait fin glisse sous le secteur choisi */
-.filters {
-  display: flex;
-}
-
-.filters__list {
-  position: relative;
-  display: flex;
-  align-items: baseline;
-  gap: 40px;
-  padding-bottom: 8px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.filters__list::-webkit-scrollbar {
-  display: none;
-}
-
-.filters__btn {
-  flex-shrink: 0;
-  padding: 4px 0;
-  margin: 0;
-  border: none;
-  background: none;
-  font: inherit;
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  color: rgba(17, 17, 17, 0.4);
-  white-space: nowrap;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.filters__btn:hover,
-.filters__btn.is-active {
-  color: #111;
-}
-
-.filters__btn:focus-visible {
-  outline: 1px solid currentColor;
-  outline-offset: 6px;
-}
-
-/* Trait fin sous le secteur actif */
-.filters__ink {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 0;
-  height: 1px;
-  background: #111;
-  pointer-events: none;
-}
-
-.filters__ink.is-ready {
-  transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1), width 0.45s cubic-bezier(0.65, 0, 0.35, 1);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .filters__ink.is-ready {
-    transition: none;
-  }
-}
-
-@media (max-width: 600px) {
-  .filters__list {
-    gap: 28px;
-  }
-}
-
 /* Conteneur des livres */
 .books {
   width: min(1300px, calc(100% - 80px));
@@ -2450,10 +2365,6 @@ a.card:focus-visible {
 }
 
 @media (max-width: 600px) {
-  .projects-bar {
-    width: calc(100% - 32px);
-  }
-
   .viewer__top {
     padding: 14px 16px;
   }
@@ -2466,46 +2377,6 @@ a.card:focus-visible {
 /* =====================================================================
    ===== Page Sur Mesure : pièces personnalisées =====
    ===================================================================== */
-
-.sm-bar {
-  width: min(1300px, calc(100% - 80px));
-  margin: 0 auto 72px;
-}
-
-/* Onglets (temporaire, pour comparer les dispositions) : même style discret que les filtres */
-.view-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 40px;
-}
-
-.view-tabs__btn {
-  padding: 4px 0 8px;
-  border: none;
-  border-bottom: 1px solid transparent;
-  background: none;
-  font: inherit;
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  color: rgba(17, 17, 17, 0.4);
-  cursor: pointer;
-  transition: color 0.3s, border-color 0.3s;
-}
-
-.view-tabs__btn:hover,
-.view-tabs__btn.is-active {
-  color: #111;
-}
-
-.view-tabs__btn.is-active {
-  border-bottom-color: #111;
-}
-
-.sm-triptyque[hidden],
-.sm-details[hidden] {
-  display: none !important;
-}
 
 /* ----- Éléments communs ----- */
 .sm-eyebrow {
@@ -2521,34 +2392,6 @@ a.card:focus-visible {
   font-size: 2.6rem;
   font-weight: 400;
   line-height: 1.05;
-}
-
-.sm-demande {
-  margin: 28px 0;
-  padding-left: 20px;
-  border-left: 1px solid #6b4a33;
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 1.3rem;
-  line-height: 1.45;
-  color: #2b2926;
-}
-
-.sm-demande span {
-  display: block;
-  margin-bottom: 6px;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  color: #6b4a33;
-}
-
-.sm-demande--plain {
-  padding: 0;
-  border: none;
-  margin: 18px 0 24px;
-  font-style: italic;
-  color: rgba(17, 17, 17, 0.7);
 }
 
 /* Nuancier : pastilles des matériaux choisis */
@@ -2575,175 +2418,7 @@ a.card:focus-visible {
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12), 0 0 0 3px #F7F5EF, 0 0 0 4px rgba(17, 17, 17, 0.15);
 }
 
-/* Photo avec points de détail numérotés */
-.sm-pinned {
-  position: relative;
-}
-
-.sm-pinned img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.sm-pin {
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  margin: -15px 0 0 -15px;
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  border-radius: 50%;
-  background: rgba(17, 17, 17, 0.55);
-  backdrop-filter: blur(4px);
-  color: #fff;
-  font: inherit;
-  font-size: 0.75rem;
-  cursor: pointer;
-  transition: background 0.25s, transform 0.25s;
-}
-
-/* Halo qui pulse doucement pour inviter au clic */
-.sm-pin::after {
-  content: "";
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  animation: sm-pulse 2.4s ease-out infinite;
-}
-
-@keyframes sm-pulse {
-  0% { transform: scale(0.8); opacity: 1; }
-  100% { transform: scale(1.5); opacity: 0; }
-}
-
-.sm-pin:hover,
-.sm-pin.is-active {
-  background: #F7F5EF;
-  color: #111;
-  transform: scale(1.12);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .sm-pin::after {
-    animation: none;
-  }
-}
-
-/* Liste des détails liée aux points */
-.sm-detail-list {
-  list-style: none;
-  border-top: 1px solid rgba(17, 17, 17, 0.12);
-}
-
-.sm-detail-list li {
-  display: grid;
-  grid-template-columns: 30px 1fr;
-  gap: 16px;
-  padding: 16px 0;
-  border-bottom: 1px solid rgba(17, 17, 17, 0.12);
-  transition: opacity 0.25s;
-}
-
-.sm-detail-list:has(.is-active) li:not(.is-active) {
-  opacity: 0.4;
-}
-
-.sm-detail-list__num {
-  display: grid;
-  place-items: center;
-  width: 26px;
-  height: 26px;
-  border: 1px solid rgba(17, 17, 17, 0.3);
-  border-radius: 50%;
-  font-size: 0.72rem;
-}
-
-.sm-detail-list li.is-active .sm-detail-list__num {
-  background: #111;
-  border-color: #111;
-  color: #F7F5EF;
-}
-
-.sm-detail-list strong {
-  display: block;
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 1.25rem;
-  font-weight: 500;
-}
-
-.sm-detail-list p {
-  margin-top: 4px;
-  font-size: 0.9rem;
-  line-height: 1.55;
-  color: rgba(17, 17, 17, 0.65);
-}
-
-/* ----- Disposition 2 : points de détail ----- */
-.sm-details {
-  width: min(1300px, calc(100% - 80px));
-  margin: 0 auto 120px;
-}
-
-.sm-details__nav {
-  display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  padding-bottom: 8px;
-  margin-bottom: 40px;
-  scrollbar-width: none;
-}
-
-.sm-details__nav::-webkit-scrollbar {
-  display: none;
-}
-
-.sm-details__thumb {
-  flex: 0 0 150px;
-  padding: 0;
-  border: none;
-  background: none;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-  opacity: 0.45;
-  transition: opacity 0.3s;
-}
-
-.sm-details__thumb img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-}
-
-.sm-details__thumb span {
-  display: block;
-  margin-top: 10px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid transparent;
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-}
-
-.sm-details__thumb:hover,
-.sm-details__thumb.is-active {
-  opacity: 1;
-}
-
-.sm-details__thumb.is-active span {
-  border-bottom-color: #111;
-}
-
-.sm-details__stage {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 64px;
-  align-items: start;
-}
-
-/* ----- Disposition 5 : triptyque -----
+/* ----- Triptyque -----
    Grande photo de face à gauche ; à droite, la vue de dos et le détail
    l'un au-dessus de l'autre. Le titre et le texte sont en dessous. */
 .sm-triptyque {
@@ -2858,24 +2533,11 @@ a.card:focus-visible {
   color: #F7F5EF;
 }
 
-/* ----- Tablette / mobile ----- */
-@media (max-width: 900px) {
-  .sm-details__stage {
-    grid-template-columns: 1fr;
-    gap: 36px;
-  }
-}
-
+/* ----- Mobile ----- */
 @media (max-width: 600px) {
-  .sm-bar,
   .sm-triptyque,
-  .sm-details,
   .sm-cta {
     width: calc(100% - 32px);
-  }
-
-  .view-tabs {
-    gap: 4px 24px;
   }
 
   .sm-title,
@@ -2907,26 +2569,12 @@ a.card:focus-visible {
 }
 
 .contact__eyebrow {
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.25em;
-  color: var(--noyer);
-}
-
-.contact__title {
-  margin-top: 18px;
+  margin-bottom: 32px;
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 2.8rem;
   font-weight: 300;
   line-height: 1.05;
-}
-
-.contact__rule {
-  display: block;
-  width: 48px;
-  height: 1px;
-  margin: 22px 0 28px;
-  background: var(--noyer);
+  color: var(--accent);
 }
 
 /* ----- Formulaire ----- */
@@ -3118,8 +2766,8 @@ select.field__input option {
     gap: 44px;
   }
 
-  .contact__title {
-    font-size: 2.5rem;
+  .contact__eyebrow {
+    font-size: 2.3rem;
   }
 
   .contact-form__row {
