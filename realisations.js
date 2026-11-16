@@ -7,11 +7,37 @@
   // images : une entrée par page du livre.
   //   - 'photo.jpg'               → une photo seule sur la page
   //   - ['photo1.jpg', 'photo2.jpg'] → deux photos l'une au-dessus de l'autre (idéal pour les photos en largeur)
+  //   - { decale: ['photo1.jpg', 'photo2.jpg'] } → deux photos décalées : en haut à gauche, en bas à droite
   // couverture : photo de la couverture, reprise seule sur la page à côté de la description
   //   (ne pas la remettre dans images).
+  // photoIntro : facultatif, photo de la page 2 (face à la description) si elle doit
+  //   être différente de la couverture.
+  // etiquette : facultatif, texte affiché en haut de la couverture à la place du secteur
+  //   (le filtre continue d'utiliser categorie).
   // couverturePosition : facultatif, quelle partie de la photo garder sur la couverture
   //   (ex. 'center 85%' : on garde le bas, on coupe le haut).
   const PROJETS = [
+    {
+      titre: 'Luteca',
+      lieu: '',
+      categorie: 'restauration',
+      etiquette: 'Mobilier haut de gamme',
+      texte: 'Profondément ancrés dans les traditions artisanales qui ont inspiré le travail des plus grands designers modernistes mexicains du XXe siècle.',
+      couverture: 'assets/realisations/luteca/couverture.jpg',
+      photoIntro: 'assets/realisations/luteca/salle.jpg',
+      images: [
+        'assets/realisations/luteca/oco-l1.jpg',
+        { decale: ['assets/realisations/luteca/oco-w2.jpg', 'assets/realisations/luteca/oco-w1.jpg'] },
+        ['assets/realisations/luteca/table-ovale-w2.jpg', 'assets/realisations/luteca/table-ovale-face.jpg'],
+        { decale: ['assets/realisations/luteca/table-ovale-d1.jpg', 'assets/realisations/luteca/table-ronde-w1.jpg'] },
+        'assets/realisations/luteca/chaise-eugenio-w1.jpg',
+        'assets/realisations/luteca/chaise-eugenio-w2.jpg',
+        'assets/realisations/luteca/buffet-tresse.jpg',
+        { decale: ['assets/realisations/luteca/buffet-tresse-d2.jpg', 'assets/realisations/luteca/buffet-tresse-d5.jpg'] },
+        'assets/realisations/luteca/san-miguel-terrasse.jpg',
+        { decale: ['assets/realisations/luteca/san-miguel-l1.jpg', 'assets/realisations/luteca/san-miguel-w1.jpg'] },
+      ],
+    },
     {
       titre: 'VF Architecture',
       lieu: '',
@@ -27,19 +53,6 @@
         'assets/realisations/vf-architecture/10.jpg',
         ['assets/realisations/vf-architecture/12.jpg', 'assets/realisations/vf-architecture/13.jpg'],
         ['assets/realisations/vf-architecture/14.jpg', 'assets/realisations/vf-architecture/15.jpg'],
-      ],
-    },
-    {
-      titre: 'Luteca',
-      lieu: '',
-      categorie: 'restauration',
-      texte: 'Texte de présentation du projet à venir : le contexte, la demande du client et les pièces réalisées par PHB70.',
-      couverture: 'assets/realisations/luteca/01.jpg',
-      images: [
-        'assets/realisations/luteca/03.jpg',
-        'assets/realisations/luteca/02.jpg',
-        'assets/realisations/luteca/04.jpg',
-        'assets/realisations/luteca/05.jpg',
       ],
     },
     {
@@ -109,7 +122,7 @@
   function coverHTML(p) {
     return `
       <span class="cover cover--creme">
-        <span class="cover__eyebrow">${esc(CATEGORIES[p.categorie])}</span>
+        <span class="cover__eyebrow">${esc(p.etiquette || CATEGORIES[p.categorie])}</span>
         <span class="cover__photo"><img src="${esc(p.couverture || [].concat(p.images[0])[0])}" alt="" loading="lazy"${p.couverturePosition ? ` style="object-position: ${esc(p.couverturePosition)}"` : ''}></span>
         <span class="cover__title">${esc(p.titre)}</span>
         <span class="cover__place">${p.lieu ? esc(p.lieu) : '&nbsp;'}</span>
@@ -212,16 +225,21 @@
     pages.push(`<div class="page page--cover">${coverHTML(p)}</div>`);
     pages.push(`
       <div class="page page--intro">
-        <p class="page__eyebrow">${esc(CATEGORIES[p.categorie])}</p>
+        <p class="page__eyebrow">${esc(p.etiquette || CATEGORIES[p.categorie])}</p>
         <h2 class="page__title">${esc(p.titre)}</h2>
         ${p.lieu ? `<p class="page__place">${esc(p.lieu)}</p>` : ''}
         <span class="page__line" aria-hidden="true"></span>
         <p class="page__text">${esc(p.texte)}</p>
       </div>`);
     // Page de droite, face à la description : la photo de couverture, seule
-    const coverSrc = p.couverture || [].concat(p.images[0])[0];
+    const coverSrc = p.photoIntro || p.couverture || [].concat(p.images[0])[0];
     pages.push(`<div class="page page--photo"><img src="${esc(coverSrc)}" alt="" loading="lazy"></div>`);
     p.images.forEach((entry) => {
+      if (entry && entry.decale) {
+        const imgs = entry.decale.map((src) => `<img src="${esc(src)}" alt="" loading="lazy">`).join('');
+        pages.push(`<div class="page page--photo page--photo-decale">${imgs}</div>`);
+        return;
+      }
       const srcs = [].concat(entry); // une photo ou deux photos sur la page
       const imgs = srcs.map((src) => `<img src="${esc(src)}" alt="" loading="lazy">`).join('');
       pages.push(`<div class="page page--photo${srcs.length > 1 ? ' page--photo-2' : ''}">${imgs}</div>`);
@@ -289,7 +307,7 @@
       leaves.push(leaf);
     }
     current = 0;
-    titleEl.textContent = `${p.titre} — ${CATEGORIES[p.categorie]}`;
+    titleEl.textContent = `${p.titre} — ${p.etiquette || CATEGORIES[p.categorie]}`;
 
     // Livre fermé, sans animation de position (il peut rester l'état du livre précédent)
     book.classList.add('no-anim');

@@ -1989,7 +1989,7 @@ a.card:focus-visible {
 
 /* Intérieur du meuble : fond en lames verticales, même noyer */
 .cabinet .books--cabinet {
-  --colw: 25cqw;
+  --colw: 33.3333cqw;
   grid-column: 2;
   grid-row: 2;
   width: auto;
@@ -1997,7 +1997,7 @@ a.card:focus-visible {
   container-type: inline-size;
   position: relative;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   background:
     /* joints entre les lames du fond */
     repeating-linear-gradient(90deg, rgba(20, 10, 4, 0.4) 0 1px, rgba(255, 235, 210, 0.07) 1px 2px, transparent 2px 260px),
@@ -2055,13 +2055,13 @@ a.card:focus-visible {
 /* Une case : le livre debout, l'étagère en dessous */
 .books--cabinet .book-item {
   position: relative;
-  padding: 50px 28px 26px; /* 26px : épaisseur de l'étagère */
+  padding: 50px 40px 26px; /* 26px : épaisseur de l'étagère */
 }
 
 .books--cabinet .book {
   position: relative;
   z-index: 2;
-  font-size: 13.5px;
+  font-size: 17px;
   transition: translate 0.35s ease;
 }
 
@@ -2117,8 +2117,8 @@ a.card:focus-visible {
 
 @media (max-width: 1000px) {
   .cabinet .books--cabinet {
-    --colw: 33.3333cqw;
-    grid-template-columns: repeat(3, 1fr);
+    --colw: 50cqw;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -2409,6 +2409,25 @@ a.card:focus-visible {
   height: auto;
   flex: 1 1 0;
   min-height: 0;
+}
+
+/* Deux photos décalées : la première en haut à gauche, la seconde en bas à droite */
+.page--photo-decale img {
+  position: absolute;
+  width: 52%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.page--photo-decale img:first-of-type {
+  top: 6%;
+  left: 9%;
+}
+
+.page--photo-decale img:last-of-type {
+  bottom: 12%;
+  right: 6%;
 }
 
 .page__num {
