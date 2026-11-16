@@ -228,7 +228,7 @@
     });
     // Nombre de pages pair, puis 4e de couverture
     if (pages.length % 2 === 0) pages.push('<div class="page page--blank"></div>');
-    pages.push('<div class="page page--back"><img src="assets/logo.png" alt="PHB70"></div>');
+    pages.push('<div class="page page--back"><img src="assets/logo-phb70.svg" alt="PHB70"></div>');
     // Numéros de page (hors couvertures)
     // (chaque page est un seul <div> : on ajoute le numéro juste avant sa fermeture)
     return pages.map((html, i) => {

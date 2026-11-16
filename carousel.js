@@ -42,5 +42,10 @@
     bars[current].classList.add('is-active');
   }
 
-  goTo(0);
+  // Si l'intro du logo est en cours, le carrousel démarre quand elle révèle le texte
+  if (document.documentElement.classList.contains('phb-intro')) {
+    document.addEventListener('phb70:intro-hero', () => goTo(0), { once: true });
+  } else {
+    goTo(0);
+  }
 })();

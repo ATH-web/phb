@@ -10,11 +10,120 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap">
   <link rel="stylesheet" href="style.css">
+
+  <!-- Intro animée du logo : décidée avant l'affichage pour éviter tout flash du site -->
+  <script>
+    (function () {
+      var root = document.documentElement;
+      try {
+        if (sessionStorage.getItem('phb70_intro_played')) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      } catch (e) { return; }
+      root.classList.add('phb-intro', 'is-intro-active');
+      // Sécurité : si l'intro n'a pas démarré au bout de 4 s, on affiche le site
+      setTimeout(function () {
+        if (!root.hasAttribute('data-intro-started')) {
+          root.classList.remove('phb-intro', 'is-intro-active');
+          document.dispatchEvent(new Event('phb70:intro-hero'));
+        }
+      }, 4000);
+    })();
+  </script>
+  <style>
+    #introBackdrop,
+    #introLogoStage {
+      display: none;
+    }
+    html.phb-intro #introBackdrop {
+      display: block;
+      position: fixed;
+      inset: 0;
+      z-index: 99990;
+      background: #F7F5EF;
+    }
+    html.phb-intro #introLogoStage {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: min(960px, 86vw);
+      aspect-ratio: 1040 / 240;
+      z-index: 99995;
+      opacity: 0;
+      pointer-events: none;
+    }
+    #introLogoStage svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    /* Pendant l'intro : header et carrousel cachés, logo du header remplacé par le logo animé */
+    html.is-intro-active .header,
+    html.is-intro-active .carousel {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+    html.phb-intro .header__logo img {
+      visibility: hidden;
+    }
+    html.phb-intro .carousel__text,
+    html.phb-intro .carousel__dots {
+      visibility: hidden;
+      opacity: 0;
+    }
+  </style>
 </head>
 <body>
+  <!-- Intro animée (affichée seulement à la 1re visite de la session) -->
+  <div id="introBackdrop" aria-hidden="true"></div>
+  <div id="introLogoStage" aria-hidden="true">
+    <svg id="phb-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 240" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+      <defs>
+        <linearGradient id="facet" x1="0" y1="0" x2="1" y2="1">
+          <stop stop-color="#121212" />
+          <stop offset=".48" stop-color="#6a6a6a" />
+          <stop offset="1" stop-color="#d0d0d0" />
+        </linearGradient>
+        <linearGradient id="facetH" x1="0" y1="1" x2="1" y2="0">
+          <stop stop-color="#151515" />
+          <stop offset="1" stop-color="#aaa" />
+        </linearGradient>
+        <linearGradient id="facetB" x1="0" y1="0" x2="1" y2="1">
+          <stop stop-color="#0c0c0c" />
+          <stop offset=".55" stop-color="#6b6b6b" />
+          <stop offset="1" stop-color="#dedede" />
+        </linearGradient>
+      </defs>
+      <g id="phb70">
+        <g id="letter-p">
+          <path id="p-base" d="M 12,29 H 153 C 186,29 211,50 211,80 C 211,110 187,133 154,133 H 47 V 199 H 12 V 106 H 153 C 170,106 178,96 178,81 C 178,67 169,57 153,57 H 12 Z" fill="#0a0a0a" />
+          <path id="p-facet" d="M12 106 H47 V153 L12 199 Z" fill="url(#facet)" />
+          <path id="p-edge" d="M12 199 L47 153 V199 Z" fill="#575757" opacity=".5" />
+        </g>
+        <g id="letter-h">
+          <path id="h-base" d="M239 29 H274 V98 H408 V29 H443 V199 H408 V126 H274 V199 H239 Z" fill="#0a0a0a" />
+          <path id="h-facet" d="M239 98 L274 98 L321 98 L274 126 L239 151 Z" fill="url(#facetH)" />
+        </g>
+        <g id="letter-b">
+          <path id="b-base" fill="#0a0a0a" fill-rule="evenodd" d="M475 29 H607 C648 29 666 47 666 75 C666 94 656 105 648 110 C674 118 680 134 680 155 C680 181 660 199 608 199 H475 Z M510 57 V99 H606 C628 99 638 91 638 79 C638 64 626 57 606 57 Z M510 127 V171 H607 C633 171 648 164 648 149 C648 136 634 127 607 127 Z" />
+          <path id="b-facet-top" d="M475 29 H510 V57 L475 99 Z" fill="url(#facetB)" />
+          <path id="b-facet-middle" d="M475 99 L510 57 V99 L475 127 Z" fill="#575757" opacity=".55" />
+          <path id="b-facet-bottom" d="M475 127 H510 V171 L475 199 Z" fill="url(#facetB)" />
+        </g>
+        <g id="letter-7">
+          <path id="seven-base" d="M695 35 H822 V44 L730 194 H717 L805 45 H695 Z" fill="#101010" />
+        </g>
+        <g id="letter-0">
+          <ellipse id="zero-base" cx="909" cy="114" rx="77" ry="81" fill="none" stroke="#111" stroke-width="9" />
+        </g>
+      </g>
+    </svg>
+  </div>
+
   <header class="header header--transparent">
     <a href="index.html" class="header__logo" aria-label="PHB70 — Accueil">
-      <img src="assets/logo.png" alt="Logo PHB70">
+      <img src="assets/logo-phb70.svg" width="173" height="40" alt="Logo PHB70">
     </a>
     <nav class="header__nav">
       <ul>
@@ -33,7 +142,6 @@
       <div class="carousel__track">
         <img class="carousel__slide is-active" src="assets/carrousel/slide-1.png" alt="Chambre avec tête de lit en bois, mur en pierre éclairé et chevet en marbre">
         <img class="carousel__slide" src="assets/carrousel/slide-2.png" alt="Salon avec sculpture murale en bois, canapé arrondi et table basse en bois massif">
-        <img class="carousel__slide" src="assets/carrousel/slide-3.png" alt="Salon circulaire avec caves à vin vitrées, lustre en cristal et canapé en arc de cercle">
       </div>
 
       <div class="carousel__text">
@@ -104,10 +212,10 @@
     </section>
 
     <section class="galerie" aria-label="Galerie de réalisations">
-      <img class="galerie__img galerie__img--1" src="assets/galerie/photo-1.png" alt="Grand salon avec canapé arrondi, mur de rangements sombres et baies vitrées sur le coucher de soleil">
-      <img class="galerie__img galerie__img--2" src="assets/galerie/photo-2.png" alt="Escalier hélicoïdal blanc avec suspensions lumineuses">
-      <img class="galerie__img galerie__img--3" src="assets/galerie/photo-3.png" alt="Chambre avec tête de lit en arche rétroéclairée">
-      <img class="galerie__img galerie__img--4" src="assets/galerie/photo-4.png" alt="Séjour ouvert avec canapé modulable, escalier sculptural et vue panoramique">
+      <img class="galerie__img galerie__img--1" src="assets/galerie/photo-1.png" alt="Salon avec mur en travertin, cheminée linéaire et table basse en marbre vert">
+      <img class="galerie__img galerie__img--2" src="assets/galerie/photo-2.png" alt="Sculpture murale blanche aux formes ondulées rétroéclairées, au-dessus d'un canapé clair">
+      <img class="galerie__img galerie__img--3" src="assets/galerie/photo-3.png" alt="Bibliothèque, buffet et table basse en laiton doré et marbre blanc">
+      <img class="galerie__img galerie__img--4" src="assets/galerie/photo-4.png" alt="Salle de restaurant avec fauteuils en velours jaune et tables nappées de blanc">
     </section>
 
     <section class="agences">
@@ -119,7 +227,7 @@
       <div class="agences__list">
         <article class="agence">
           <div class="agence__body">
-            <img class="agence__logo" src="assets/logo.png" alt="" aria-hidden="true">
+            <img class="agence__logo" src="assets/logo-phb70.svg" alt="" aria-hidden="true">
             <h3 class="agence__city">Paris</h3>
             <span class="agence__line" aria-hidden="true"></span>
             <a class="agence__phone" href="tel:+33682840308">+33 6 82 84 03 08</a>
@@ -132,7 +240,7 @@
         </article>
         <article class="agence">
           <div class="agence__body">
-            <img class="agence__logo" src="assets/logo.png" alt="" aria-hidden="true">
+            <img class="agence__logo" src="assets/logo-phb70.svg" alt="" aria-hidden="true">
             <h3 class="agence__city">New York</h3>
             <span class="agence__line" aria-hidden="true"></span>
             <a class="agence__phone" href="tel:+19173014228">+1 917 301 42 28</a>
@@ -145,7 +253,7 @@
         </article>
         <article class="agence">
           <div class="agence__body">
-            <img class="agence__logo" src="assets/logo.png" alt="" aria-hidden="true">
+            <img class="agence__logo" src="assets/logo-phb70.svg" alt="" aria-hidden="true">
             <h3 class="agence__city">Luxembourg</h3>
             <span class="agence__line" aria-hidden="true"></span>
             <a class="agence__phone" href="tel:+3522021182203">+352 20 21 18 22 03</a>
@@ -158,7 +266,7 @@
         </article>
         <article class="agence">
           <div class="agence__body">
-            <img class="agence__logo" src="assets/logo.png" alt="" aria-hidden="true">
+            <img class="agence__logo" src="assets/logo-phb70.svg" alt="" aria-hidden="true">
             <h3 class="agence__city">Portugal</h3>
             <span class="agence__line" aria-hidden="true"></span>
             <a class="agence__phone" href="tel:+351910302959">+351 910 302 959</a>
@@ -224,7 +332,7 @@
   <footer class="footer">
     <div class="footer__top">
       <a href="index.html" class="footer__logo" aria-label="PHB70 — Accueil">
-        <img src="assets/logo.png" alt="Logo PHB70">
+        <img src="assets/logo-phb70.svg" width="191" height="44" alt="Logo PHB70">
       </a>
       <p class="footer__tagline">Mobilier sur&#8209;mesure<br><em>pour lieux d'exception.</em></p>
     </div>
@@ -269,8 +377,10 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="header.js"></script>
   <script src="carousel.js"></script>
+  <script src="intro.js"></script>
   <script src="reveal.js"></script>
 </body>
 </html>
