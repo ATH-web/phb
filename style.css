@@ -2067,19 +2067,40 @@ a.card:focus-visible {
     10px 6px 16px rgba(0, 0, 0, 0.45);
 }
 
+/* Téléphone : pas d'étagère, les livres les uns sous les autres */
 @media (max-width: 600px) {
+  .cabinet-tabs {
+    display: none;
+  }
+
   .cabinet,
-  .cabinet-tabs {
-    width: calc(100% - 24px);
+  .cabinet[data-meuble="taupe"] {
+    width: calc(100% - 48px);
+    aspect-ratio: auto;
+    margin: 8px auto 88px;
+    background: none;
   }
 
-  .cabinet {
-    margin-bottom: 80px;
+  .cabinet .books--cabinet {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
   }
 
-  .cabinet-tabs {
-    gap: 4px 24px;
-    margin-bottom: 24px;
+  .books--cabinet .book-item {
+    position: static;
+    width: min(300px, 100%);
+  }
+
+  .books--cabinet .book {
+    font-size: 15px;
+  }
+
+  .books--cabinet .book:hover,
+  .books--cabinet .book:focus-visible {
+    translate: none;
   }
 }
 
