@@ -2195,6 +2195,7 @@ a.card:focus-visible {
 /* Le livre : deux pages côte à côte, les feuilles pivotent autour de la reliure */
 .flipbook {
   position: relative;
+  flex-shrink: 0; /* garde ses deux pages même si l'écran est plus étroit (téléphone) */
   width: calc(var(--pw) * 2);
   height: var(--ph);
   transform-style: preserve-3d;
@@ -2207,6 +2208,26 @@ a.card:focus-visible {
 
 /* Pas d'animation quand on remet le livre fermé avant de l'ouvrir */
 .flipbook.no-anim { transition: none; }
+
+/* Une seule ombre pour tout le livre (et non une par feuille, qui s'empilaient
+   et débordaient sur la page d'en face). Elle couvre les deux pages quand le
+   livre est ouvert, une seule page quand il est fermé. */
+.flipbook::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  transform: translateZ(-2px); /* derrière les feuilles */
+  pointer-events: none;
+  transition: left 0.9s ease, right 0.9s ease;
+}
+
+.flipbook.is-closed-front::before { left: 50%; }
+.flipbook.is-closed-back::before { right: 50%; }
+.flipbook.no-anim::before { transition: none; }
 
 .leaf {
   position: absolute;
@@ -2229,7 +2250,6 @@ a.card:focus-visible {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   cursor: pointer;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
 }
 
 .leaf__back {
@@ -2407,6 +2427,24 @@ a.card:focus-visible {
   .viewer__title {
     font-size: 1.05rem;
   }
+
+  /* Une seule page, la plus grande possible : toute la largeur de l'écran */
+  .viewer {
+    --pw: min(calc(100vw - 32px), calc((100vh - 150px) * 0.75), calc((100dvh - 150px) * 0.75));
+  }
+
+  .viewer__stage {
+    overflow: hidden; /* la page de gauche (vide) reste hors de l'écran */
+  }
+}
+
+/* Page seule (téléphone) : le livre reste cadré sur la page de droite */
+.flipbook.flipbook--page-seule {
+  transform: translateX(calc(var(--pw) * -0.5));
+}
+
+.flipbook.flipbook--page-seule::before {
+  left: 50%;
 }
 
 /* =====================================================================

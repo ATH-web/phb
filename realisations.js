@@ -231,8 +231,13 @@
   const OPEN_MS = 750;   // durée de l'agrandissement du livre
   const VIEWER_BG = 'rgba(36, 34, 31, 0.97)';
 
+  // Téléphone : une seule page visible (celle de droite), en grand.
+  // Chaque feuille porte une page au recto, le verso reste vide.
+  const PAGE_SEULE = window.matchMedia('(max-width: 600px)');
+  let pageSeule = false; // mode du livre actuellement ouvert
+
   // Contenu de chaque page du livre
-  function buildPages(p) {
+  function buildPages(p, seule) {
     const pages = [];
     pages.push(`<div class="page page--cover">${coverHTML(p)}</div>`);
     pages.push(`
@@ -256,8 +261,8 @@
       const imgs = srcs.map((src) => `<img src="${esc(src)}" alt="" loading="lazy">`).join('');
       pages.push(`<div class="page page--photo${srcs.length > 1 ? ' page--photo-2' : ''}">${imgs}</div>`);
     });
-    // Nombre de pages pair, puis 4e de couverture
-    if (pages.length % 2 === 0) pages.push('<div class="page page--blank"></div>');
+    // Nombre de pages pair (double page), puis 4e de couverture
+    if (!seule && pages.length % 2 === 0) pages.push('<div class="page page--blank"></div>');
     pages.push('<div class="page page--back"><img src="assets/logo-phb70.svg" alt="PHB70"></div>');
     // Numéros de page (hors couvertures)
     // (chaque page est un seul <div> : on ajoute le numéro juste avant sa fermeture)
@@ -268,6 +273,9 @@
     });
   }
 
+  // Dernière position possible : livre refermé (double page) ou 4e de couverture (page seule)
+  const lastPos = () => (pageSeule ? leaves.length - 1 : leaves.length);
+
   function render() {
     const n = leaves.length;
     leaves.forEach((leaf, i) => {
@@ -276,10 +284,17 @@
       leaf.style.zIndex = flipped ? i + 1 : n - i;
     });
     // Livre fermé : on le centre sur la couverture (ou sur la 4e de couverture)
-    book.classList.toggle('is-closed-front', current === 0);
-    book.classList.toggle('is-closed-back', current === n);
+    book.classList.toggle('is-closed-front', !pageSeule && current === 0);
+    book.classList.toggle('is-closed-back', !pageSeule && current === n);
+    book.classList.toggle('flipbook--page-seule', pageSeule);
     prevBtn.disabled = current === 0;
-    nextBtn.disabled = current === n;
+    nextBtn.disabled = current === lastPos();
+    if (pageSeule) {
+      countEl.textContent = current === 0 ? 'Couverture'
+        : current === n - 1 ? 'Fin'
+        : `Page ${current} / ${n - 2}`;
+      return;
+    }
     const total = n * 2;
     countEl.textContent = current === 0 ? 'Couverture'
       : current === n ? 'Fin'
@@ -289,7 +304,7 @@
   function turn(dir) {
     const n = leaves.length;
     const target = current + dir;
-    if (target < 0 || target > n) return;
+    if (target < 0 || target > lastPos()) return;
     // La feuille qui tourne passe au-dessus des autres pendant l'animation
     const leaf = leaves[dir > 0 ? current : current - 1];
     current = target;
@@ -303,17 +318,27 @@
   // jusqu'au centre de l'écran, puis s'ouvre tout seul sur la première double page.
   function open(index, srcEl) {
     const p = PROJETS[index];
-    const pages = buildPages(p);
+    pageSeule = PAGE_SEULE.matches;
+    const pages = buildPages(p, pageSeule);
     book.innerHTML = '';
     leaves = [];
-    for (let i = 0; i < pages.length; i += 2) {
+    const step = pageSeule ? 1 : 2;
+    for (let i = 0; i < pages.length; i += step) {
       const leaf = document.createElement('div');
       leaf.className = 'leaf';
+      const back = pageSeule ? '<div class="page page--blank"></div>' : pages[i + 1];
       leaf.innerHTML = `
         <div class="leaf__face leaf__front">${pages[i]}</div>
-        <div class="leaf__face leaf__back">${pages[i + 1]}</div>`;
+        <div class="leaf__face leaf__back">${back}</div>`;
       // Clic sur une page de droite : on avance ; de gauche : on recule
-      leaf.querySelector('.leaf__front').addEventListener('click', () => turn(1));
+      // Téléphone (page seule) : clic dans le quart gauche de la page = page précédente
+      leaf.querySelector('.leaf__front').addEventListener('click', (e) => {
+        if (pageSeule) {
+          const r = e.currentTarget.getBoundingClientRect();
+          if (e.clientX - r.left < r.width / 4) { turn(-1); return; }
+        }
+        turn(1);
+      });
       leaf.querySelector('.leaf__back').addEventListener('click', () => turn(-1));
       book.appendChild(leaf);
       leaves.push(leaf);
@@ -389,6 +414,20 @@
 
   document.querySelectorAll('.book').forEach((b) => {
     b.addEventListener('click', () => open(Number(b.dataset.index), b));
+  });
+  // Téléphone : on tourne les pages en glissant le doigt
+  const stageEl = viewer.querySelector('.viewer__stage');
+  let touchX = null, touchY = null;
+  stageEl.addEventListener('touchstart', (e) => {
+    touchX = e.touches[0].clientX;
+    touchY = e.touches[0].clientY;
+  }, { passive: true });
+  stageEl.addEventListener('touchend', (e) => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    const dy = e.changedTouches[0].clientY - touchY;
+    touchX = null;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) turn(dx < 0 ? 1 : -1);
   });
   prevBtn.addEventListener('click', () => turn(-1));
   nextBtn.addEventListener('click', () => turn(1));
