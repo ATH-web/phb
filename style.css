@@ -1978,60 +1978,17 @@ a.card:focus-visible {
   color: rgba(43, 41, 38, 0.6);
 }
 
-/* ----- Bibliothèque (photo du meuble en noyer) -----
-   Le meuble est une photo (1638 × 1226 px) avec 6 cases : 3 colonnes, 2 rangées.
+/* ----- Bibliothèque (photo du meuble : noyer, marbre et textile taupe) -----
+   Le meuble est une photo (1636 × 1226 px) avec 6 cases : 3 colonnes, 2 rangées.
    Chaque livre est placé dans sa case par realisations.js (--x : centre de la case,
    --y : hauteur de l'étagère, tous deux en % de la photo). */
 .cabinet {
   position: relative;
   width: min(1240px, calc(100% - 80px));
-  aspect-ratio: 1638 / 1226;
+  aspect-ratio: 1636 / 1226;
   margin: 0 auto 160px;
-  background: url("assets/realisations/bibliotheque.jpg") center / 100% 100% no-repeat;
+  background: url("assets/realisations/bibliotheque-taupe.jpg") center / 100% 100% no-repeat;
   container-type: inline-size;
-}
-
-/* Deuxième meuble : noyer foncé, marbre et fond en textile taupe (640 × 480 px) */
-.cabinet[data-meuble="taupe"] {
-  aspect-ratio: 640 / 480;
-  background-image: url("assets/realisations/bibliotheque-taupe.jpg");
-}
-
-/* Onglets pour changer de meuble */
-.cabinet-tabs {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px 40px;
-  width: min(1240px, calc(100% - 80px));
-  margin: 0 auto 40px;
-}
-
-.cabinet-tabs__tab {
-  padding: 6px 0;
-  border: none;
-  border-bottom: 1px solid transparent;
-  background: none;
-  font: inherit;
-  font-size: 0.95rem;
-  letter-spacing: 0.04em;
-  color: rgba(43, 41, 38, 0.55);
-  cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease;
-}
-
-.cabinet-tabs__tab:hover {
-  color: #2b2926;
-}
-
-.cabinet-tabs__tab[aria-selected="true"] {
-  color: #2b2926;
-  border-bottom-color: #2b2926;
-}
-
-.cabinet-tabs__tab:focus-visible {
-  outline: 2px solid #44423D;
-  outline-offset: 4px;
 }
 
 .cabinet .books--cabinet {
@@ -2041,17 +1998,31 @@ a.card:focus-visible {
   margin: 0;
 }
 
-/* Un livre debout sur son étagère */
+/* Un livre debout sur son étagère, posé au fond de la case */
 .books--cabinet .book-item {
   position: absolute;
-  left: calc(var(--x, 50%) - 7.5%);
+  left: calc(var(--x, 50%) - 7.75%);
   bottom: var(--y, 26%);
-  width: 15%; /* ~ 330px de haut dans une case de ~385px */
+  width: 15.5%; /* ~ 340px de haut dans une case de ~395px */
+  isolation: isolate; /* l'ombre de contact reste juste derrière le livre */
+}
+
+/* Ombre de contact sur l'étagère, sous le livre */
+.books--cabinet .book-item::after {
+  content: "";
+  position: absolute;
+  left: -6%;
+  right: -10%;
+  bottom: -3px;
+  height: 10px;
+  background: radial-gradient(ellipse at center, rgba(15, 10, 6, 0.75) 0%, rgba(15, 10, 6, 0.35) 45%, transparent 72%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .books--cabinet .book {
   position: relative;
-  font-size: 0.9cqw; /* le texte de la couverture suit la taille du meuble */
+  font-size: 0.93cqw; /* le texte de la couverture suit la taille du meuble */
   transition: translate 0.35s ease;
 }
 
@@ -2060,21 +2031,34 @@ a.card:focus-visible {
   translate: 0 -4%; /* le livre se soulève de l'étagère */
 }
 
+/* La couverture prend la lumière chaude de la LED du haut de la case */
 .books--cabinet .cover {
+  filter: brightness(0.9) sepia(0.12) saturate(0.95);
   box-shadow:
     1px 0 0 #E9E4DA, 2px 0 0 #DDD7CB, 3px 0 0 #E9E4DA, 4px 0 0 #D6CFC2,
     5px 0 0 #E4DED3, 6px 0 0 #CFC8BA,
-    10px 6px 16px rgba(0, 0, 0, 0.45);
+    /* ombre portée sur le textile du fond (lumière venant du haut) */
+    0 10px 18px -4px rgba(20, 13, 8, 0.55),
+    0 2px 30px rgba(20, 13, 8, 0.35);
+}
+
+/* Dégradé de lumière : haut éclairé, bas plus sombre près de l'étagère */
+.books--cabinet .book__body::after {
+  content: "";
+  position: absolute;
+  inset: 0 -6px 0 0;
+  background: linear-gradient(180deg,
+    rgba(255, 236, 205, 0.16) 0%,
+    rgba(255, 236, 205, 0) 30%,
+    rgba(25, 16, 10, 0) 60%,
+    rgba(25, 16, 10, 0.22) 100%);
+  border-radius: 2px 4px 4px 2px;
+  pointer-events: none;
 }
 
 /* Téléphone : pas d'étagère, les livres les uns sous les autres */
 @media (max-width: 600px) {
-  .cabinet-tabs {
-    display: none;
-  }
-
-  .cabinet,
-  .cabinet[data-meuble="taupe"] {
+  .cabinet {
     width: calc(100% - 48px);
     aspect-ratio: auto;
     margin: 8px auto 88px;
@@ -2101,6 +2085,16 @@ a.card:focus-visible {
   .books--cabinet .book:hover,
   .books--cabinet .book:focus-visible {
     translate: none;
+  }
+
+  /* hors du meuble : pas d'éclairage ni d'ombre d'étagère */
+  .books--cabinet .book-item::after,
+  .books--cabinet .book__body::after {
+    content: none;
+  }
+
+  .books--cabinet .cover {
+    filter: none;
   }
 }
 

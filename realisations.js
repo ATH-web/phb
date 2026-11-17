@@ -156,63 +156,19 @@
         </button>
       </div>`).join('');
 
-  // ===== Bibliothèques : un livre par case =====
-  // Deux meubles au choix (onglets). Pour chacun, les cases de la photo, de gauche à droite
+  // ===== Bibliothèque : un livre par case =====
+  // Cases de la photo (assets/realisations/bibliotheque-taupe.jpg), de gauche à droite
   // puis de haut en bas. x : centre de la case, y : hauteur de l'étagère depuis le bas,
   // en % de la photo. 6 cases : au-delà de 6 projets, il faudra une autre photo.
-  const MEUBLES = {
-    noyer: [ // assets/realisations/bibliotheque.jpg
-      { x: 23.9, y: 58.2 }, { x: 50.5, y: 58.2 }, { x: 75.8, y: 58.2 },
-      { x: 26.4, y: 26.2 }, { x: 50.1, y: 26.2 }, { x: 75.9, y: 26.2 },
-    ],
-    taupe: [ // assets/realisations/bibliotheque-taupe.jpg
-      { x: 24.2, y: 57.4 }, { x: 50.3, y: 57.4 }, { x: 75.6, y: 57.4 },
-      { x: 26.1, y: 25.7 }, { x: 50.0, y: 25.7 }, { x: 75.8, y: 25.7 },
-    ],
-  };
-  const cabinetEl = document.getElementById('cabinet');
-  const tabs = [...document.querySelectorAll('.cabinet-tabs__tab')];
-
-  function layoutCabinet() {
-    const cases = MEUBLES[cabinetEl.dataset.meuble] || MEUBLES.noyer;
-    const visible = [...cabinetEl.querySelectorAll('.book-item')].filter((it) => !it.hidden);
-    visible.forEach((it, k) => {
-      const c = cases[k % cases.length];
-      it.style.setProperty('--x', c.x + '%');
-      it.style.setProperty('--y', c.y + '%');
-    });
-  }
-
-  function choisirMeuble(nom, focus) {
-    if (!MEUBLES[nom]) return;
-    cabinetEl.dataset.meuble = nom;
-    tabs.forEach((t) => {
-      const actif = t.dataset.meuble === nom;
-      t.setAttribute('aria-selected', actif);
-      t.tabIndex = actif ? 0 : -1;
-      if (actif) {
-        cabinetEl.setAttribute('aria-labelledby', t.id);
-        if (focus) t.focus();
-      }
-    });
-    layoutCabinet();
-    try { localStorage.setItem('phb-meuble', nom); } catch (e) { /* stockage indisponible */ }
-  }
-
-  tabs.forEach((t, i) => {
-    t.addEventListener('click', () => choisirMeuble(t.dataset.meuble));
-    // flèches gauche / droite pour passer d'un onglet à l'autre
-    t.addEventListener('keydown', (e) => {
-      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-      e.preventDefault();
-      const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length];
-      choisirMeuble(next.dataset.meuble, true);
-    });
+  const CASES = [
+    { x: 23.9, y: 57.8 }, { x: 50.1, y: 57.8 }, { x: 75.5, y: 57.8 },
+    { x: 26.0, y: 26.1 }, { x: 49.9, y: 26.1 }, { x: 75.7, y: 26.1 },
+  ];
+  document.querySelectorAll('#cabinet .book-item').forEach((it, k) => {
+    const c = CASES[k % CASES.length];
+    it.style.setProperty('--x', c.x + '%');
+    it.style.setProperty('--y', c.y + '%');
   });
-
-  let meubleInitial = 'noyer';
-  try { meubleInitial = localStorage.getItem('phb-meuble') || 'noyer'; } catch (e) { /* stockage indisponible */ }
-  choisirMeuble(meubleInitial);
 
   // ===== Visionneuse : livre en grand, pages qui se tournent =====
   const viewer = document.getElementById('viewer');
