@@ -87,22 +87,6 @@ body {
   }
 }
 
-@media (max-width: 900px) {
-  .header {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .header__nav ul {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px 20px;
-  }
-
-  .header__nav a {
-    font-size: 0.9rem;
-  }
-}
 
 /* ===== Header transparent (page d'accueil) ===== */
 .header--transparent {
@@ -191,6 +175,151 @@ body {
   background: #44423D;
   border-color: #44423D;
   color: #fff;
+}
+
+/* ===== Menu mobile : bouton 3 barres + panneau plein écran =====
+   Le bouton est ajouté par header.js (classe has-burger sur le header) :
+   sans JavaScript, le menu reste affiché normalement. */
+.header__burger {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .header.has-burger .header__burger {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    width: 44px;
+    height: 44px;
+    margin-right: -10px; /* aligne les barres sur la marge du site */
+    padding: 0 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+
+  .header__burger span {
+    display: block;
+    height: 1.5px;
+    background: #111;
+    transition: transform 0.35s ease, opacity 0.2s ease, background-color 0.3s;
+  }
+
+  /* barres blanches sur le carrousel (accueil, avant de scroller) */
+  .header--transparent:not(.is-scrolled):not(.is-menu-open) .header__burger span {
+    background: #fff;
+  }
+
+  /* les 3 barres deviennent une croix */
+  .header.is-menu-open .header__burger span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+  .header.is-menu-open .header__burger span:nth-child(2) { opacity: 0; }
+  .header.is-menu-open .header__burger span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+  .header.has-burger .header__burger:focus-visible {
+    outline: 2px solid #44423D;
+    outline-offset: 2px;
+  }
+
+  /* Panneau : couvre tout l'écran, sous le logo et la croix */
+  .header.has-burger .header__nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 96px 32px 48px;
+    background: #F7F5EF;
+    visibility: hidden;
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 0.5s cubic-bezier(0.7, 0, 0.2, 1), visibility 0s 0.5s;
+  }
+
+  .header.is-menu-open .header__nav {
+    visibility: visible;
+    clip-path: inset(0 0 0 0);
+    transition: clip-path 0.5s cubic-bezier(0.7, 0, 0.2, 1), visibility 0s;
+  }
+
+  .header.has-burger .header__nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .header.has-burger .header__nav li {
+    width: 100%;
+    border-bottom: 1px solid rgba(68, 66, 61, 0.15);
+    opacity: 0;
+    translate: 0 12px;
+    transition: opacity 0.4s ease, translate 0.4s ease;
+  }
+
+  .header.has-burger .header__nav li:last-child {
+    border-bottom: none;
+  }
+
+  /* les liens arrivent l'un après l'autre */
+  .header.is-menu-open .header__nav li {
+    opacity: 1;
+    translate: 0 0;
+  }
+  .header.is-menu-open .header__nav li:nth-child(1) { transition-delay: 0.15s; }
+  .header.is-menu-open .header__nav li:nth-child(2) { transition-delay: 0.2s; }
+  .header.is-menu-open .header__nav li:nth-child(3) { transition-delay: 0.25s; }
+  .header.is-menu-open .header__nav li:nth-child(4) { transition-delay: 0.3s; }
+  .header.is-menu-open .header__nav li:nth-child(5) { transition-delay: 0.35s; }
+  .header.is-menu-open .header__nav li:nth-child(6) { transition-delay: 0.4s; }
+
+  .header.has-burger .header__nav a,
+  .header--transparent.has-burger .header__nav a,
+  .header--transparent.is-scrolled.has-burger .header__nav a {
+    display: inline-block;
+    padding: 14px 0;
+    border-bottom: none;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 2rem;
+    letter-spacing: 0;
+    color: #111;
+  }
+
+  .header.has-burger .header__nav a.active {
+    font-style: italic;
+  }
+
+  .header.has-burger .header__nav a.header__cta,
+  .header--transparent.has-burger .header__nav a.header__cta,
+  .header--transparent.is-scrolled.has-burger .header__nav a.header__cta {
+    margin-top: 28px;
+    padding: 14px 28px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-style: normal;
+    color: #fff;
+  }
+
+  /* menu ouvert : header crème uni, logo foncé */
+  .header--transparent.is-menu-open {
+    background: #F7F5EF;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .header--transparent.is-menu-open::before {
+    opacity: 0;
+  }
+
+  .header--transparent.is-menu-open .header__logo img {
+    filter: none;
+  }
 }
 
 /* ===== Carrousel ===== */

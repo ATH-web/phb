@@ -34,7 +34,7 @@
       // Éléments du site existant
       this.headerLogoSlot = document.querySelector('.header__logo img');
       this.siteHeader = document.querySelector('.header');
-      this.siteNav = document.querySelector('.header__nav');
+      this.siteNav = [...document.querySelectorAll('.header__nav, .header__burger')]; // menu et bouton 3 barres
       this.heroSection = document.querySelector('.carousel');
       this.heroContent = document.querySelector('.carousel__text');
       this.heroVisual = document.querySelector('.carousel__dots');
@@ -101,7 +101,7 @@
           this.introLogoStage,
           this.introBackdrop,
           this.siteHeader,
-          this.siteNav,
+          ...this.siteNav,
           this.heroSection,
           this.heroContent,
           this.heroVisual,
