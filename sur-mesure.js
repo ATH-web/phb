@@ -238,7 +238,7 @@
     },
     {
       nom: 'Banquette Soleil',
-      projet: 'Projet 4',
+      projet: 'Le mobilier',
       secteur: 'Restauration',
       image: 'assets/realisations/projet-4/03.jpg',
       demande: 'Des sièges enveloppants qui apportent de la couleur et de la chaleur à une salle très minérale.',

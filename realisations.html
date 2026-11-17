@@ -38,13 +38,15 @@
       <p class="method-intro__text">Chaque projet est raconté dans un livre. Choisissez-en un pour le feuilleter.</p>
     </section>
 
-    <!-- Bibliothèque en noyer : chapeau, montants, socle ; les livres sont générés par realisations.js -->
-    <div class="cabinet">
-      <span class="cabinet__top" aria-hidden="true"></span>
-      <span class="cabinet__side cabinet__side--left" aria-hidden="true"></span>
+    <!-- Choix du meuble : deux bibliothèques, mêmes livres -->
+    <div class="cabinet-tabs" role="tablist" aria-label="Choisir la bibliothèque">
+      <button class="cabinet-tabs__tab" type="button" role="tab" id="tab-noyer" data-meuble="noyer" aria-controls="cabinet" aria-selected="true">Noyer &amp; laiton</button>
+      <button class="cabinet-tabs__tab" type="button" role="tab" id="tab-taupe" data-meuble="taupe" aria-controls="cabinet" aria-selected="false" tabindex="-1">Noyer, marbre &amp; textile taupe</button>
+    </div>
+
+    <!-- Bibliothèque (photo) ; les livres sont générés et placés par realisations.js -->
+    <div class="cabinet" id="cabinet" role="tabpanel" aria-labelledby="tab-noyer" data-meuble="noyer">
       <section class="books books--cabinet" aria-label="Nos réalisations"></section>
-      <span class="cabinet__side cabinet__side--right" aria-hidden="true"></span>
-      <span class="cabinet__base" aria-hidden="true"></span>
     </div>
   </main>
 

@@ -507,6 +507,29 @@ body {
   display: block;
 }
 
+/* Photo en paysage montrée moins zoomée : plus large que la carte, posée en bas,
+   et le ciel prolongé au-dessus (l'image se fond dans le dégradé par le haut) */
+.card--recul {
+  background: var(--ciel, linear-gradient(180deg, #8494AE 0%, #A3B0C6 45%, #A9B6CB 100%));
+}
+
+/* Ciel bleu de la villa (Immobilier de prestige) */
+.card--ciel-bleu {
+  --ciel: linear-gradient(180deg, #3A72B3 0%, #4682C1 60%, #4884C3 100%);
+  --recul-largeur: 160%;
+}
+
+.card--recul img {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: var(--recul-largeur, 150%);
+  height: auto;
+  translate: -50% 0;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 18%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 18%);
+}
+
 .card::after {
   content: "";
   position: absolute;
@@ -1821,251 +1844,108 @@ a.card:focus-visible {
   color: rgba(43, 41, 38, 0.6);
 }
 
-/* ----- Bibliothèque en noyer -----
-   Un vrai meuble, tout dans le même noyer :
-   - chapeau (dessus) et socle : veinage horizontal, moulure, arêtes éclairées
-   - montants : veinage vertical
-   - fond en lames verticales, faces intérieures en perspective pour la profondeur
-   - étagères : veinage horizontal continu d'une case à l'autre */
+/* ----- Bibliothèque (photo du meuble en noyer) -----
+   Le meuble est une photo (1638 × 1226 px) avec 6 cases : 3 colonnes, 2 rangées.
+   Chaque livre est placé dans sa case par realisations.js (--x : centre de la case,
+   --y : hauteur de l'étagère, tous deux en % de la photo). */
 .cabinet {
-  --side: 38px;
-  --top: 40px;
-  --base: 58px;
-  --depth: 16px; /* profondeur visible des faces intérieures */
   position: relative;
-  display: grid;
-  grid-template-columns: var(--side) 1fr var(--side);
-  grid-template-rows: var(--top) auto var(--base);
-  width: min(1240px, calc(100% - 80px)); /* plus compact : le meuble ne prend pas toute la largeur */
+  width: min(1240px, calc(100% - 80px));
+  aspect-ratio: 1638 / 1226;
   margin: 0 auto 160px;
+  background: url("assets/realisations/bibliotheque.jpg") center / 100% 100% no-repeat;
+  container-type: inline-size;
 }
 
-/* Ombre du meuble posé au sol */
-.cabinet::after {
-  content: "";
-  position: absolute;
-  left: 1%;
-  right: 1%;
-  bottom: -22px;
-  height: 40px;
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.38), transparent 70%);
-  z-index: -1;
+/* Deuxième meuble : noyer foncé, marbre et fond en textile taupe (640 × 480 px) */
+.cabinet[data-meuble="taupe"] {
+  aspect-ratio: 640 / 480;
+  background-image: url("assets/realisations/bibliotheque-taupe.jpg");
 }
 
-/* Chapeau : déborde un peu des montants, moulure sous l'arête */
-.cabinet__top {
-  grid-column: 1 / -1;
-  grid-row: 1;
-  position: relative;
-  z-index: 3;
-  margin: 0 -14px;
-  border-radius: 3px 3px 0 0;
-  background:
-    linear-gradient(180deg,
-      rgba(255, 240, 220, 0.4) 0, rgba(255, 240, 220, 0.1) 2px, transparent 35%,
-      transparent calc(100% - 16px), rgba(20, 10, 4, 0.4) calc(100% - 16px), rgba(20, 10, 4, 0.4) calc(100% - 15px),
-      rgba(255, 240, 220, 0.18) calc(100% - 15px), rgba(255, 240, 220, 0.18) calc(100% - 14px),
-      transparent calc(100% - 14px), rgba(20, 10, 4, 0.3) 100%),
-    url("assets/textures/noyer.jpg") 0 25% / 1700px auto;
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.28);
+/* Onglets pour changer de meuble */
+.cabinet-tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 40px;
+  width: min(1240px, calc(100% - 80px));
+  margin: 0 auto 40px;
 }
 
-/* Montants gauche et droit */
-.cabinet__side {
-  grid-row: 2;
-  position: relative;
-  background:
-    linear-gradient(90deg, rgba(255, 240, 220, 0.25) 0, rgba(255, 240, 220, 0.06) 2px, transparent 30%, transparent 70%, rgba(20, 10, 4, 0.35) 100%),
-    url("assets/textures/noyer-v.jpg") 20% 0 / auto 1500px;
+.cabinet-tabs__tab {
+  padding: 6px 0;
+  border: none;
+  border-bottom: 1px solid transparent;
+  background: none;
+  font: inherit;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  color: rgba(43, 41, 38, 0.55);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-.cabinet__side--left { grid-column: 1; }
-
-.cabinet__side--right {
-  grid-column: 3;
-  background-position: 0 0, 75% 40%;
+.cabinet-tabs__tab:hover {
+  color: #2b2926;
 }
 
-/* Socle : moulure en haut, ombre en bas */
-.cabinet__base {
-  grid-column: 1 / -1;
-  grid-row: 3;
-  position: relative;
-  z-index: 3;
-  background:
-    linear-gradient(180deg,
-      rgba(255, 240, 220, 0.35) 0, rgba(255, 240, 220, 0.08) 2px, transparent 12px,
-      rgba(20, 10, 4, 0.4) 14px, rgba(20, 10, 4, 0.4) 15px,
-      rgba(255, 240, 220, 0.16) 15px, rgba(255, 240, 220, 0.16) 16px,
-      transparent 18px, transparent 60%, rgba(20, 10, 4, 0.4) 100%),
-    url("assets/textures/noyer.jpg") 0 70% / 1700px auto;
-  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.18);
+.cabinet-tabs__tab[aria-selected="true"] {
+  color: #2b2926;
+  border-bottom-color: #2b2926;
 }
 
-/* Intérieur du meuble : fond en lames verticales, même noyer */
+.cabinet-tabs__tab:focus-visible {
+  outline: 2px solid #44423D;
+  outline-offset: 4px;
+}
+
 .cabinet .books--cabinet {
-  --colw: 33.3333cqw;
-  grid-column: 2;
-  grid-row: 2;
+  position: absolute;
+  inset: 0;
   width: auto;
   margin: 0;
-  container-type: inline-size;
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  background:
-    /* joints entre les lames du fond */
-    repeating-linear-gradient(90deg, rgba(20, 10, 4, 0.4) 0 1px, rgba(255, 235, 210, 0.07) 1px 2px, transparent 2px 260px),
-    url("assets/textures/noyer-v.jpg") 0 0 / 1000px auto; /* ~2100px de haut : pas de raccord visible */
-  /* profondeur : le fond est dans l'ombre près des bords */
-  box-shadow:
-    inset 0 30px 30px -14px rgba(0, 0, 0, 0.5),
-    inset 30px 0 30px -16px rgba(0, 0, 0, 0.4),
-    inset -30px 0 30px -16px rgba(0, 0, 0, 0.4);
 }
 
-/* Faces intérieures des montants, vues en perspective (trapèzes) */
-.cabinet .books--cabinet::before,
-.cabinet .books--cabinet::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: var(--depth);
-  z-index: 1;
-  pointer-events: none;
-}
-
-.cabinet .books--cabinet::before {
-  left: 0;
-  clip-path: polygon(0 0, 100% var(--depth), 100% 100%, 0 100%);
-  background:
-    linear-gradient(90deg, rgba(10, 5, 2, 0.15), rgba(10, 5, 2, 0.5)),
-    url("assets/textures/noyer-v.jpg") 0 0 / auto 1500px;
-}
-
-.cabinet .books--cabinet::after {
-  right: 0;
-  clip-path: polygon(0 var(--depth), 100% 0, 100% 100%, 0 100%);
-  background:
-    linear-gradient(-90deg, rgba(10, 5, 2, 0.15), rgba(10, 5, 2, 0.5)),
-    url("assets/textures/noyer-v.jpg") 60% 0 / auto 1500px;
-}
-
-/* Face intérieure du chapeau (dessous), en perspective */
-.cabinet::before {
-  content: "";
-  position: absolute;
-  top: var(--top);
-  left: var(--side);
-  right: var(--side);
-  height: var(--depth);
-  z-index: 2;
-  clip-path: polygon(0 0, 100% 0, calc(100% - var(--depth)) 100%, var(--depth) 100%);
-  background:
-    linear-gradient(180deg, rgba(10, 5, 2, 0.55), rgba(10, 5, 2, 0.3)),
-    url("assets/textures/noyer.jpg") 0 40% / 1700px auto;
-}
-
-/* Une case : le livre debout, l'étagère en dessous */
+/* Un livre debout sur son étagère */
 .books--cabinet .book-item {
-  position: relative;
-  padding: 50px 40px 26px; /* 26px : épaisseur de l'étagère */
+  position: absolute;
+  left: calc(var(--x, 50%) - 7.5%);
+  bottom: var(--y, 26%);
+  width: 15%; /* ~ 330px de haut dans une case de ~385px */
 }
 
 .books--cabinet .book {
   position: relative;
-  z-index: 2;
-  font-size: 17px;
+  font-size: 0.9cqw; /* le texte de la couverture suit la taille du meuble */
   transition: translate 0.35s ease;
 }
 
 .books--cabinet .book:hover,
 .books--cabinet .book:focus-visible {
-  translate: 0 -18px; /* le livre se soulève nettement de l'étagère */
+  translate: 0 -4%; /* le livre se soulève de l'étagère */
 }
 
 .books--cabinet .cover {
   box-shadow:
     1px 0 0 #E9E4DA, 2px 0 0 #DDD7CB, 3px 0 0 #E9E4DA, 4px 0 0 #D6CFC2,
     5px 0 0 #E4DED3, 6px 0 0 #CFC8BA,
-    12px 6px 18px rgba(0, 0, 0, 0.5);
-}
-
-/* Étagère : chant avant en noyer, arête éclairée, continu sur toute la largeur */
-.books--cabinet .book-item::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: calc(var(--fill, 0) * -100%); /* prolonge l'étagère sous les cases vides */
-  bottom: 0;
-  height: 26px;
-  z-index: 3;
-  background:
-    linear-gradient(180deg,
-      rgba(255, 240, 220, 0.45) 0, rgba(255, 240, 220, 0.1) 2px, transparent 30%,
-      transparent 70%, rgba(20, 10, 4, 0.4) 100%),
-    url("assets/textures/noyer.jpg") calc(var(--col, 0) * var(--colw) * -1) 30% / 1700px auto repeat-x;
-}
-
-/* Dernière rangée : pas d'étagère, les livres reposent directement sur le socle */
-.books--cabinet .book-item.is-last-row {
-  padding-bottom: 0;
-}
-
-.books--cabinet .book-item.is-last-row::after {
-  display: none;
-}
-
-/* Ombre de l'étagère sur le fond de la case du dessous */
-.books--cabinet .book-item::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: calc(var(--fill, 0) * -100%);
-  top: 100%;
-  height: 40px;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
-  opacity: var(--shade, 1);
-  pointer-events: none;
-}
-
-@media (max-width: 1000px) {
-  .cabinet .books--cabinet {
-    --colw: 50cqw;
-    grid-template-columns: repeat(2, 1fr);
-  }
+    10px 6px 16px rgba(0, 0, 0, 0.45);
 }
 
 @media (max-width: 600px) {
-  .cabinet {
-    --side: 22px;
-    --top: 26px;
-    --base: 40px;
-    --depth: 10px;
+  .cabinet,
+  .cabinet-tabs {
     width: calc(100% - 24px);
+  }
+
+  .cabinet {
     margin-bottom: 80px;
   }
 
-  .cabinet__top {
-    margin: 0 -6px;
-  }
-
-  .cabinet .books--cabinet {
-    --colw: 50cqw;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .books--cabinet .book-item {
-    padding: 30px 14px 22px;
-  }
-
-  .books--cabinet .book-item::after {
-    height: 22px;
-  }
-
-  .books--cabinet .book {
-    font-size: 10px;
+  .cabinet-tabs {
+    gap: 4px 24px;
+    margin-bottom: 24px;
   }
 }
 

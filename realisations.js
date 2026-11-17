@@ -62,7 +62,7 @@
       titre: 'VF Architecture',
       lieu: '',
       categorie: 'immobilier',
-      texte: 'Texte de présentation du projet à venir : le contexte, la demande du client et les pièces réalisées par PHB70.',
+      texte: 'VF ARCHITECTURE nous fait confiance pour l’ameublement de ses projets de résidences de prestige. Du choix des matières à la conception de mobilier sur mesure, nous composons des intérieurs en accord avec l’architecture de chaque maison.',
       couverture: 'assets/realisations/vf-architecture/couverture.jpg', // photo de couverture (n'apparaît pas dans le livre)
       images: [
         ['assets/realisations/vf-architecture/01.jpg', 'assets/realisations/vf-architecture/03.jpg'],
@@ -112,10 +112,10 @@
       ],
     },
     {
-      titre: 'Projet 4', // NOM À CONFIRMER
+      titre: 'Le mobilier',
       lieu: '',
       categorie: 'restauration',
-      texte: 'Texte de présentation du projet à venir : le contexte, la demande du client et les pièces réalisées par PHB70.',
+      texte: '', // pas de texte d'introduction
       couverture: 'assets/realisations/projet-4/01.jpg',
       images: [
         ['assets/realisations/projet-4/02.jpg', 'assets/realisations/projet-4/03.jpg'],
@@ -156,26 +156,63 @@
         </button>
       </div>`).join('');
 
-  // ===== Bibliothèque en noyer : étagères continues =====
-  // Chaque livre porte son morceau d'étagère. On indique à chacun sa colonne
-  // (pour que le veinage du bois continue d'un livre à l'autre) et, au dernier
-  // livre, combien de cases vides il reste pour prolonger l'étagère jusqu'au bout.
+  // ===== Bibliothèques : un livre par case =====
+  // Deux meubles au choix (onglets). Pour chacun, les cases de la photo, de gauche à droite
+  // puis de haut en bas. x : centre de la case, y : hauteur de l'étagère depuis le bas,
+  // en % de la photo. 6 cases : au-delà de 6 projets, il faudra une autre photo.
+  const MEUBLES = {
+    noyer: [ // assets/realisations/bibliotheque.jpg
+      { x: 23.9, y: 58.2 }, { x: 50.5, y: 58.2 }, { x: 75.8, y: 58.2 },
+      { x: 26.4, y: 26.2 }, { x: 50.1, y: 26.2 }, { x: 75.9, y: 26.2 },
+    ],
+    taupe: [ // assets/realisations/bibliotheque-taupe.jpg
+      { x: 24.2, y: 57.4 }, { x: 50.3, y: 57.4 }, { x: 75.6, y: 57.4 },
+      { x: 26.1, y: 25.7 }, { x: 50.0, y: 25.7 }, { x: 75.8, y: 25.7 },
+    ],
+  };
+  const cabinetEl = document.getElementById('cabinet');
+  const tabs = [...document.querySelectorAll('.cabinet-tabs__tab')];
+
   function layoutCabinet() {
-    const cabinet = document.querySelector('.books--cabinet');
-    const cols = getComputedStyle(cabinet).gridTemplateColumns.split(' ').length;
-    const visible = [...cabinet.querySelectorAll('.book-item')].filter((it) => !it.hidden);
-    const lastRow = Math.floor((visible.length - 1) / cols);
+    const cases = MEUBLES[cabinetEl.dataset.meuble] || MEUBLES.noyer;
+    const visible = [...cabinetEl.querySelectorAll('.book-item')].filter((it) => !it.hidden);
     visible.forEach((it, k) => {
-      it.style.setProperty('--col', k % cols);
-      // pas d'ombre sous la dernière étagère : c'est le bas du meuble
-      it.style.setProperty('--shade', Math.floor(k / cols) === lastRow ? 0 : 1);
-      // dernière rangée : pas d'étagère, les livres sont posés sur le bas du meuble
-      it.classList.toggle('is-last-row', Math.floor(k / cols) === lastRow);
-      it.style.setProperty('--fill', k === visible.length - 1 ? cols - 1 - (k % cols) : 0);
+      const c = cases[k % cases.length];
+      it.style.setProperty('--x', c.x + '%');
+      it.style.setProperty('--y', c.y + '%');
     });
   }
-  window.addEventListener('resize', layoutCabinet);
-  layoutCabinet(); // dès le chargement de la page
+
+  function choisirMeuble(nom, focus) {
+    if (!MEUBLES[nom]) return;
+    cabinetEl.dataset.meuble = nom;
+    tabs.forEach((t) => {
+      const actif = t.dataset.meuble === nom;
+      t.setAttribute('aria-selected', actif);
+      t.tabIndex = actif ? 0 : -1;
+      if (actif) {
+        cabinetEl.setAttribute('aria-labelledby', t.id);
+        if (focus) t.focus();
+      }
+    });
+    layoutCabinet();
+    try { localStorage.setItem('phb-meuble', nom); } catch (e) { /* stockage indisponible */ }
+  }
+
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => choisirMeuble(t.dataset.meuble));
+    // flèches gauche / droite pour passer d'un onglet à l'autre
+    t.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length];
+      choisirMeuble(next.dataset.meuble, true);
+    });
+  });
+
+  let meubleInitial = 'noyer';
+  try { meubleInitial = localStorage.getItem('phb-meuble') || 'noyer'; } catch (e) { /* stockage indisponible */ }
+  choisirMeuble(meubleInitial);
 
   // ===== Visionneuse : livre en grand, pages qui se tournent =====
   const viewer = document.getElementById('viewer');
@@ -204,7 +241,7 @@
         <h2 class="page__title">${esc(p.titre)}</h2>
         ${p.lieu ? `<p class="page__place">${esc(p.lieu)}</p>` : ''}
         <span class="page__line" aria-hidden="true"></span>
-        <p class="page__text">${esc(p.texte)}</p>
+        ${p.texte ? `<p class="page__text">${esc(p.texte)}</p>` : ''}
       </div>`);
     // Page de droite, face à la description : la photo de couverture, seule
     const coverSrc = p.photoIntro || p.couverture || [].concat(p.images[0])[0];
