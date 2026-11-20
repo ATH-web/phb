@@ -6,9 +6,7 @@
   <title>Notre équipe — PHB70</title>
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/favicon-180.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap">
+  <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -133,7 +131,11 @@
 
     <div class="footer__bottom">
       <p>&copy; 2026 PHB70. Tous droits réservés.</p>
-      <a class="footer__link" href="#">Mentions légales</a>
+      <p class="footer__credit">Site réalisé par <a class="footer__link footer__credit-link" href="https://hosa-group.fr/" target="_blank" rel="noopener">HOSA GROUP</a></p>
+      <nav class="footer__legal" aria-label="Informations légales">
+        <a class="footer__link" href="mentions-legales.html">Mentions légales</a>
+        <a class="footer__link" href="confidentialite.html">Politique de confidentialité</a>
+      </nav>
     </div>
   </footer>
   <script src="header.js"></script>

@@ -1,9 +1,7 @@
-// Page Contact : vérification du formulaire avant envoi.
-// À FAIRE : le formulaire n'envoie rien pour l'instant. Il faut le brancher
-// sur un service d'envoi (Formspree, Netlify Forms, script PHP de l'hébergeur…)
-// en renseignant son adresse dans ENDPOINT.
+// Page Contact : vérification du formulaire puis envoi via la fonction
+// Cloudflare functions/api/contact.js (qui transmet la demande à Resend).
 (function () {
-  const ENDPOINT = ''; // ex. 'https://formspree.io/f/xxxxxxx'
+  const ENDPOINT = '/api/contact';
 
   const form = document.getElementById('contact-form');
   if (!form) return;
