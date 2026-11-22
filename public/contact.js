@@ -1,4 +1,4 @@
-// Page Contact : vérification du formulaire puis envoi via la fonction
+// Page Contact : vérification du formulaire puis envoi à la fonction
 // Cloudflare functions/api/contact.js (qui transmet la demande à Resend).
 (function () {
   const ENDPOINT = '/api/contact';
@@ -51,8 +51,14 @@
     status.textContent = 'Envoi en cours…';
     status.className = 'contact-form__status';
     try {
-      const res = await fetch(ENDPOINT, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
-      if (!res.ok) throw new Error(res.status);
+      const donnees = Object.fromEntries(new FormData(form).entries());
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(donnees),
+      });
+      const reponse = await res.json().catch(() => ({}));
+      if (!res.ok || !reponse.ok) throw new Error(reponse.error || res.status);
       form.reset();
       status.textContent = 'Merci, votre demande a bien été envoyée. Nous revenons vers vous sous 48 heures.';
       status.className = 'contact-form__status is-success';

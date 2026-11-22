@@ -206,15 +206,16 @@
       </div>`);
     // Page de droite, face à la description : la photo de couverture, seule
     const coverSrc = p.photoIntro || p.couverture || [].concat(p.images[0])[0];
-    pages.push(`<div class="page page--photo"><img src="${esc(coverSrc)}" alt="" loading="lazy"></div>`);
+    const alt = esc(`Réalisation PHB70 : ${p.titre}${p.lieu ? `, ${p.lieu}` : ''}`);
+    pages.push(`<div class="page page--photo"><img src="${esc(coverSrc)}" alt="${alt}" loading="lazy"></div>`);
     p.images.forEach((entry) => {
       if (entry && entry.decale) {
-        const imgs = entry.decale.map((src) => `<img src="${esc(src)}" alt="" loading="lazy">`).join('');
+        const imgs = entry.decale.map((src) => `<img src="${esc(src)}" alt="${alt}" loading="lazy">`).join('');
         pages.push(`<div class="page page--photo page--photo-decale">${imgs}</div>`);
         return;
       }
       const srcs = [].concat(entry); // une photo ou deux photos sur la page
-      const imgs = srcs.map((src) => `<img src="${esc(src)}" alt="" loading="lazy">`).join('');
+      const imgs = srcs.map((src) => `<img src="${esc(src)}" alt="${alt}" loading="lazy">`).join('');
       pages.push(`<div class="page page--photo${srcs.length > 1 ? ' page--photo-2' : ''}">${imgs}</div>`);
     });
     // Nombre de pages pair (double page), puis 4e de couverture

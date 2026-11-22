@@ -1,0 +1,29 @@
+# Redirections 301 de l'ancien site WordPress (www.phb70.com) vers le nouveau site.
+# Les cibles sont les URL finales (sans .html ni slash final) : aucune chaîne de redirections.
+# La redirection phb70.com -> www.phb70.com se configure côté domaine, pas ici.
+
+# Pages
+/notre-mission              /equipe            301
+/notre-mission/             /equipe            301
+/notre-expertise            /realisations      301
+/notre-expertise/           /realisations      301
+/un-monde-sur-mesure        /sur-mesure        301
+/un-monde-sur-mesure/       /sur-mesure        301
+/contactez-nous             /contact           301
+/contactez-nous/            /contact           301
+/mentions-legales/          /mentions-legales  301
+/protection-des-donnees     /confidentialite   301
+/protection-des-donnees/    /confidentialite   301
+/protection-du-copyright    /mentions-legales  301
+/protection-du-copyright/   /mentions-legales  301
+/bonjour-tout-le-monde      /                  301
+/bonjour-tout-le-monde/     /                  301
+
+# Chemins techniques WordPress
+/wp-admin                   /                  301
+/wp-admin/*                 /                  301
+/wp-login.php               /                  301
+/feed                       /                  301
+/feed/*                     /                  301
+/wp-content/*               /                  301
+/wp-sitemap*                /sitemap.xml       301
