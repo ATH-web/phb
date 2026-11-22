@@ -1,0 +1,5 @@
+# Secrets locaux pour wrangler pages dev
+.dev.vars
+.wrangler/
+.DS_Store
+node_modules/

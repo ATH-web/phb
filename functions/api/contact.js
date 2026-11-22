@@ -1,11 +1,12 @@
 // Cloudflare Pages Function : reçoit le formulaire de contact (POST /api/contact)
 // et envoie la demande par e-mail via Resend.
 //
-// Variables à définir dans Cloudflare (Pages > Settings > Variables and Secrets) :
+// Variables à définir dans Cloudflare (Pages > Settings > Variables and Secrets)
+// et, en local, dans .dev.vars (voir .dev.vars.example) :
 //   RESEND_API_KEY  (secret)  clé API Resend, ex. re_xxxxxxxx
-//   CONTACT_TO                adresse qui reçoit les demandes, ex. contact@phb70.fr
+//   CONTACT_TO                adresse qui reçoit les demandes (plusieurs possibles, séparées par des virgules)
 //   CONTACT_FROM              expéditeur sur un domaine vérifié dans Resend,
-//                             ex. "Site PHB70 <formulaire@phb70.fr>"
+//                             ex. "Site PHB70 <formulaire@mail.phb70.com>"
 
 const TYPES = {
   hotellerie: 'Hôtellerie',
@@ -15,38 +16,64 @@ const TYPES = {
   autre: 'Autre',
 };
 
-const json = (body, status = 200) =>
-  new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
+const MAX = { nom: 100, email: 200, societe: 150, telephone: 30, message: 5000 };
+const EMAIL_RE = /^[^\s@<>"',;]+@[^\s@<>"',;]+\.[^\s@<>"',;]{2,}$/;
 
-const escape = (s) =>
-  s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+const json = (body, status = 200, headers = {}) =>
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', ...headers },
+  });
+
+const escapeHtml = (s) =>
+  String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+
+// Lit le corps en JSON ou en FormData et renvoie un objet simple { champ: valeur }
+async function lireCorps(request) {
+  const type = request.headers.get('Content-Type') || '';
+  if (type.includes('application/json')) {
+    const data = await request.json();
+    return data && typeof data === 'object' ? data : {};
+  }
+  const form = await request.formData();
+  return Object.fromEntries(form.entries());
+}
 
 export async function onRequestPost({ request, env }) {
   if (!env.RESEND_API_KEY || !env.CONTACT_TO || !env.CONTACT_FROM) {
-    return json({ error: 'Configuration manquante' }, 500);
+    console.error('Contact : variables RESEND_API_KEY, CONTACT_TO ou CONTACT_FROM manquantes');
+    return json({ ok: false, error: 'Service momentanément indisponible.' }, 500);
   }
 
   let data;
   try {
-    data = await request.formData();
+    data = await lireCorps(request);
   } catch {
-    return json({ error: 'Requête invalide' }, 400);
+    return json({ ok: false, error: 'Requête invalide.' }, 400);
   }
-  const get = (k, max = 200) => String(data.get(k) || '').trim().slice(0, max);
+  const champ = (k) => (typeof data[k] === 'string' ? data[k].trim() : '');
 
-  // Champ piège invisible : rempli uniquement par les robots
-  if (get('site_web')) return json({ ok: true });
+  // Champ piège invisible : rempli uniquement par les robots → on fait semblant d'avoir envoyé
+  if (champ('website')) return json({ ok: true });
 
-  const nom = get('nom');
-  const societe = get('societe');
-  const email = get('email', 254);
-  const telephone = get('telephone', 40);
-  const type = TYPES[get('type')] || TYPES.autre;
-  const message = get('message', 5000);
-  const consentement = data.get('consentement');
+  const nom = champ('nom');
+  const email = champ('email');
+  const societe = champ('societe');
+  const telephone = champ('telephone');
+  const message = champ('message');
+  const type = TYPES[champ('type')] || '';
+  const consentement = data.consentement === true || champ('consentement') !== '';
 
-  if (!nom || !message || !consentement || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return json({ error: 'Champs obligatoires manquants ou invalides' }, 400);
+  const erreurs = [];
+  if (!nom) erreurs.push('nom');
+  if (!email || !EMAIL_RE.test(email)) erreurs.push('email');
+  if (!message) erreurs.push('message');
+  if (!consentement) erreurs.push('consentement');
+  for (const [k, max] of Object.entries(MAX)) {
+    if (champ(k).length > max) erreurs.push(k);
+  }
+  if (erreurs.length) {
+    return json({ ok: false, error: 'Champs manquants ou invalides.', fields: [...new Set(erreurs)] }, 400);
   }
 
   const lignes = [
@@ -60,28 +87,42 @@ export async function onRequestPost({ request, env }) {
   const html = `
     <h2 style="font-family:Georgia,serif;font-weight:normal">Nouvelle demande depuis le site</h2>
     <table cellpadding="6" style="border-collapse:collapse;font-family:Arial,sans-serif;font-size:14px">
-      ${lignes.map(([k, v]) => `<tr><td style="color:#666">${k}</td><td><strong>${escape(v)}</strong></td></tr>`).join('')}
+      ${lignes.map(([k, v]) => `<tr><td style="color:#666">${k}</td><td><strong>${escapeHtml(v)}</strong></td></tr>`).join('')}
     </table>
-    <p style="font-family:Arial,sans-serif;font-size:14px;white-space:pre-wrap;border-top:1px solid #ddd;padding-top:12px">${escape(message)}</p>`;
+    <p style="font-family:Arial,sans-serif;font-size:14px;white-space:pre-wrap;border-top:1px solid #ddd;padding-top:12px">${escapeHtml(message)}</p>`;
 
   const text = `${lignes.map(([k, v]) => `${k} : ${v}`).join('\n')}\n\n${message}`;
 
-  const res = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      from: env.CONTACT_FROM,
-      to: env.CONTACT_TO.split(',').map((s) => s.trim()),
-      reply_to: email,
-      subject: `Demande de contact — ${nom}${societe ? ` (${societe})` : ''} — ${type}`,
-      html,
-      text,
-    }),
-  });
+  // Pas de retour à la ligne dans l'objet du mail
+  const sujet = `Demande de contact — ${nom}${societe ? ` (${societe})` : ''}`.replace(/[\r\n]+/g, ' ');
+
+  let res;
+  try {
+    res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: env.CONTACT_FROM,
+        to: env.CONTACT_TO.split(',').map((s) => s.trim()).filter(Boolean),
+        reply_to: email,
+        subject: sujet,
+        html,
+        text,
+      }),
+    });
+  } catch (err) {
+    console.error('Resend injoignable :', err);
+    return json({ ok: false, error: 'L’envoi a échoué. Merci de réessayer.' }, 502);
+  }
 
   if (!res.ok) {
-    console.error('Resend', res.status, await res.text());
-    return json({ error: 'Envoi impossible' }, 502);
+    console.error('Resend a refusé l’envoi :', res.status, await res.text());
+    return json({ ok: false, error: 'L’envoi a échoué. Merci de réessayer.' }, 502);
   }
   return json({ ok: true });
+}
+
+// Toute autre méthode que POST
+export async function onRequest() {
+  return json({ ok: false, error: 'Méthode non autorisée.' }, 405, { Allow: 'POST' });
 }
