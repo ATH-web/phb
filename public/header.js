@@ -37,11 +37,14 @@ window.scrollTo(0, 0);
 
   // ===== Menu mobile : bouton 3 barres qui ouvre le menu en plein écran =====
   const nav = header.querySelector('.header__nav');
+  const EN = document.documentElement.lang === 'en';
+  const LABEL_OPEN = EN ? 'Open menu' : 'Ouvrir le menu';
+  const LABEL_CLOSE = EN ? 'Close menu' : 'Fermer le menu';
   const burger = document.createElement('button');
   burger.type = 'button';
   burger.className = 'header__burger';
   burger.setAttribute('aria-expanded', 'false');
-  burger.setAttribute('aria-label', 'Ouvrir le menu');
+  burger.setAttribute('aria-label', LABEL_OPEN);
   burger.innerHTML = '<span></span><span></span><span></span>';
   if (nav) {
     nav.id = nav.id || 'menu-principal';
@@ -54,7 +57,7 @@ window.scrollTo(0, 0);
   function setMenu(open) {
     header.classList.toggle('is-menu-open', open);
     burger.setAttribute('aria-expanded', open);
-    burger.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    burger.setAttribute('aria-label', open ? LABEL_CLOSE : LABEL_OPEN);
     document.documentElement.style.overflow = open ? 'hidden' : ''; // la page ne défile pas derrière
     if (open) header.classList.remove('is-hidden');
   }

@@ -1,35 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.phb70.com/</loc>
-    <lastmod>2026-11-22</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.phb70.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.phb70.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.phb70.com/"/>
+    <lastmod>2026-11-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.phb70.com/en/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.phb70.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.phb70.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.phb70.com/"/>
+    <lastmod>2026-11-28</lastmod>
   </url>
   <url>
     <loc>https://www.phb70.com/equipe</loc>
-    <lastmod>2026-11-22</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.phb70.com/equipe"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.phb70.com/en/team"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.phb70.com/equipe"/>
+    <lastmod>2026-11-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.phb70.com/en/team</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.phb70.com/equipe"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.phb70.com/en/team"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.phb70.com/equipe"/>
+    <lastmod>2026-11-28</lastmod>
   </url>
   <url>
     <loc>https://www.phb70.com/methode</loc>
-    <lastmod>2026-11-22</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.phb70.com/methode"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.phb70.com/en/method"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.phb70.com/methode"/>
+    <lastmod>2026-11-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.phb70.com/en/method</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.phb70.com/methode"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.phb70.com/en/method"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.phb70.com/methode"/>
+    <lastmod>2026-11-28</lastmod>
   </url>
   <url>
     <loc>https://www.phb70.com/realisations</loc>
-    <lastmod>2026-11-22</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.phb70.com/realisations"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.phb70.com/en/projects"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.phb70.com/realisations"/>
+    <lastmod>2026-11-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.phb70.com/en/projects</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.phb70.com/realisations"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.phb70.com/en/projects"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.phb70.com/realisations"/>
+    <lastmod>2026-11-28</lastmod>
   </url>
   <url>
     <loc>https://www.phb70.com/sur-mesure</loc>
-    <lastmod>2026-11-22</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.phb70.com/sur-mesure"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.phb70.com/en/bespoke"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.phb70.com/sur-mesure"/>
+    <lastmod>2026-11-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.phb70.com/en/bespoke</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.phb70.com/sur-mesure"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.phb70.com/en/bespoke"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.phb70.com/sur-mesure"/>
+    <lastmod>2026-11-28</lastmod>
   </url>
   <url>
     <loc>https://www.phb70.com/contact</loc>
-    <lastmod>2026-11-22</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.phb70.com/contact"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.phb70.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.phb70.com/contact"/>
+    <lastmod>2026-11-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.phb70.com/en/contact</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.phb70.com/contact"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.phb70.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.phb70.com/contact"/>
+    <lastmod>2026-11-28</lastmod>
   </url>
   <url>
     <loc>https://www.phb70.com/mentions-legales</loc>
-    <lastmod>2026-11-22</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.phb70.com/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.phb70.com/en/legal-notice"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.phb70.com/mentions-legales"/>
+    <lastmod>2026-11-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.phb70.com/en/legal-notice</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.phb70.com/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.phb70.com/en/legal-notice"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.phb70.com/mentions-legales"/>
+    <lastmod>2026-11-28</lastmod>
   </url>
   <url>
     <loc>https://www.phb70.com/confidentialite</loc>
-    <lastmod>2026-11-22</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.phb70.com/confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.phb70.com/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.phb70.com/confidentialite"/>
+    <lastmod>2026-11-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.phb70.com/en/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.phb70.com/confidentialite"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.phb70.com/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.phb70.com/confidentialite"/>
+    <lastmod>2026-11-28</lastmod>
   </url>
 </urlset>

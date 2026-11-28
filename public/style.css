@@ -104,6 +104,21 @@ body {
   white-space: nowrap;
 }
 
+/* Sélecteur de langue (FR / EN) : discret, à droite du bouton Contact */
+.header__nav ul {
+  align-items: center;
+}
+
+.header__lang a {
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  opacity: 0.8;
+}
+
+.header__lang a:hover {
+  opacity: 1;
+}
+
 /* Écrans moyens : on resserre le menu pour qu'il tienne à côté du logo horizontal */
 @media (min-width: 901px) and (max-width: 1100px) {
   .header__nav ul {
@@ -310,6 +325,25 @@ body {
   .header.is-menu-open .header__nav li:nth-child(4) { transition-delay: 0.3s; }
   .header.is-menu-open .header__nav li:nth-child(5) { transition-delay: 0.35s; }
   .header.is-menu-open .header__nav li:nth-child(6) { transition-delay: 0.4s; }
+  .header.is-menu-open .header__nav li:nth-child(7) { transition-delay: 0.45s; }
+
+  /* Contact n'est plus le dernier élément : pas de filet sous le bouton */
+  .header.has-burger .header__nav li:has(.header__cta) {
+    border-bottom: none;
+  }
+
+  .header.has-burger .header__nav li.header__lang {
+    margin-top: 20px;
+  }
+
+  .header.has-burger .header__nav li.header__lang a,
+  .header--transparent.has-burger .header__nav li.header__lang a,
+  .header--transparent.is-scrolled.has-burger .header__nav li.header__lang a {
+    padding: 8px 0;
+    font-family: inherit;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+  }
 
   .header.has-burger .header__nav a,
   .header--transparent.has-burger .header__nav a,

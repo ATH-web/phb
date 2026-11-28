@@ -5,18 +5,26 @@
   // demande, details, caracteristiques, planche, texture, projet : plus affichés pour l'instant (gardés pour plus tard)
   // nuancier : matériaux choisis par le client (pastilles)
   // texte : court paragraphe de présentation
+  // en : textes de la version anglaise du site (nom, secteur, légendes du triptyque, noms du nuancier, texte)
   const PIECES = [
     {
       nom: 'Fauteuil Arceau',
+      en: {
+        nom: 'Arceau Armchair',
+        secteur: 'Hospitality',
+        legendes: ['The piece', 'Back view', 'The detail'],
+        nuancier: ['Ivory nubuck', 'Brushed brass', 'Topstitching thread'],
+        texte: 'A frame of brass tubing bent in a single piece, wrapping around the seat and extending into the armrests. Ivory nubuck, double topstitching and rolls held by custom-machined brass rings.',
+      },
       projet: 'Projet à confirmer',
       secteur: 'Hôtellerie',
-      image: 'assets/sur-mesure/fauteuil-arceau/vue-face.jpg',
+      image: '/assets/sur-mesure/fauteuil-arceau/vue-face.jpg',
       // triptyque : 3 photos — gauche (grande), puis à droite l'une au-dessus de l'autre
       //   les photos sont affichées en entier, sans recadrage
       triptyque: [
-        { src: 'assets/sur-mesure/fauteuil-arceau/vue-face.jpg', legende: 'La pièce' },
-        { src: 'assets/sur-mesure/fauteuil-arceau/vue-arriere.jpg', legende: 'Vue arrière' },
-        { src: 'assets/sur-mesure/fauteuil-arceau/detail.jpg', legende: 'Le détail' },
+        { src: '/assets/sur-mesure/fauteuil-arceau/vue-face.jpg', legende: 'La pièce' },
+        { src: '/assets/sur-mesure/fauteuil-arceau/vue-arriere.jpg', legende: 'Vue arrière' },
+        { src: '/assets/sur-mesure/fauteuil-arceau/detail.jpg', legende: 'Le détail' },
       ],
       demande: 'Un fauteuil de lounge doux et lumineux, dont la structure devienne un élément de décor.',
       caracteristiques: {
@@ -40,13 +48,20 @@
     },
     {
       nom: 'Bibliothèque Orgue',
+      en: {
+        nom: 'Orgue Bookcase',
+        secteur: 'Residential',
+        legendes: ['The piece', 'The matching sideboard', 'The detail'],
+        nuancier: ['Brushed brass', 'Pearl grey lacquer', 'Brass mesh'],
+        texte: 'Clusters of brass tubes, like organ pipes, carry pearl grey lacquered shelves. Boxes of woven brass mesh punctuate the shelving; the sideboard speaks the same language.',
+      },
       projet: 'Projet à confirmer',
       secteur: 'Résidentiel',
-      image: 'assets/sur-mesure/bibliotheque-orgue/vue-face.jpg',
+      image: '/assets/sur-mesure/bibliotheque-orgue/vue-face.jpg',
       triptyque: [
-        { src: 'assets/sur-mesure/bibliotheque-orgue/vue-face.jpg', legende: 'La pièce' },
-        { src: 'assets/sur-mesure/bibliotheque-orgue/vue-buffet.jpg', legende: 'Le buffet assorti' },
-        { src: 'assets/sur-mesure/bibliotheque-orgue/detail.jpg', legende: 'Le détail' },
+        { src: '/assets/sur-mesure/bibliotheque-orgue/vue-face.jpg', legende: 'La pièce' },
+        { src: '/assets/sur-mesure/bibliotheque-orgue/vue-buffet.jpg', legende: 'Le buffet assorti' },
+        { src: '/assets/sur-mesure/bibliotheque-orgue/detail.jpg', legende: 'Le détail' },
       ],
       demande: 'Une grande bibliothèque ouverte, légère malgré sa taille, et un buffet assorti pour le même salon.',
       caracteristiques: {
@@ -70,13 +85,20 @@
     },
     {
       nom: 'Buffet Envol',
+      en: {
+        nom: 'Envol Sideboard',
+        secteur: 'Residential',
+        legendes: ['The piece', 'The handle-leg', 'The detail'],
+        nuancier: ['Speckled aubergine lacquer', 'Patinated bronze', 'Black lacquered top'],
+        texte: 'A dark case in speckled lacquer, crossed by two bronze gestures. Each handle starts under the top, folds back and runs down to the floor to become the leg: the piece seems to float.',
+      },
       projet: 'Projet à confirmer',
       secteur: 'Résidentiel',
-      image: 'assets/sur-mesure/buffet-envol/vue-face.jpg',
+      image: '/assets/sur-mesure/buffet-envol/vue-face.jpg',
       triptyque: [
-        { src: 'assets/sur-mesure/buffet-envol/vue-face.jpg', legende: 'La pièce' },
-        { src: 'assets/sur-mesure/buffet-envol/poignee.jpg', legende: 'La poignée-piètement' },
-        { src: 'assets/sur-mesure/buffet-envol/detail.jpg', legende: 'Le détail' },
+        { src: '/assets/sur-mesure/buffet-envol/vue-face.jpg', legende: 'La pièce' },
+        { src: '/assets/sur-mesure/buffet-envol/poignee.jpg', legende: 'La poignée-piètement' },
+        { src: '/assets/sur-mesure/buffet-envol/detail.jpg', legende: 'Le détail' },
       ],
       demande: 'Un buffet bas et sombre, presque monolithique, dont les poignées deviennent la signature de la pièce.',
       caracteristiques: {
@@ -99,13 +121,20 @@
     },
     {
       nom: 'Armoire Sablier',
+      en: {
+        nom: 'Sablier Wardrobe',
+        secteur: 'Residential',
+        legendes: ['The piece', 'The detail', 'The legs'],
+        nuancier: ['Midnight blue lacquer', 'Sky blue speckle', 'Lavender lacquer sides', 'Patinated bronze'],
+        texte: 'Two midnight blue lacquered doors, painted with a pattern of speckled circles and diamonds. The bronze handles cross like an hourglass, then run down to the floor to carry the wardrobe.',
+      },
       projet: 'Projet à confirmer',
       secteur: 'Résidentiel',
-      image: 'assets/sur-mesure/armoire-sablier/vue-face.jpg',
+      image: '/assets/sur-mesure/armoire-sablier/vue-face.jpg',
       triptyque: [
-        { src: 'assets/sur-mesure/armoire-sablier/vue-face.jpg', legende: 'La pièce' },
-        { src: 'assets/sur-mesure/armoire-sablier/detail.jpg', legende: 'Le détail' },
-        { src: 'assets/sur-mesure/armoire-sablier/pieds.jpg', legende: 'Le piètement' },
+        { src: '/assets/sur-mesure/armoire-sablier/vue-face.jpg', legende: 'La pièce' },
+        { src: '/assets/sur-mesure/armoire-sablier/detail.jpg', legende: 'Le détail' },
+        { src: '/assets/sur-mesure/armoire-sablier/pieds.jpg', legende: 'Le piètement' },
       ],
       demande: 'Une armoire haute au décor nocturne, assortie au buffet, avec la même signature en bronze.',
       caracteristiques: {
@@ -129,13 +158,20 @@
     },
     {
       nom: 'Table d’appoint Oco',
+      en: {
+        nom: 'Oco Side Table',
+        secteur: 'Restaurants',
+        legendes: ['The piece', 'The detail', 'The top'],
+        nuancier: ['Solid walnut', 'Solid oak', 'Satin oil'],
+        texte: 'A rounded base in solid wood, split by an arched opening, carrying a round top in a single gesture. Available in walnut or oak, with an oiled finish.',
+      },
       projet: 'Luteca',
       secteur: 'Restauration',
-      image: 'assets/sur-mesure/table-oco/vue-face.jpg',
+      image: '/assets/sur-mesure/table-oco/vue-face.jpg',
       triptyque: [
-        { src: 'assets/sur-mesure/table-oco/vue-face.jpg', legende: 'La pièce' },
-        { src: 'assets/sur-mesure/table-oco/detail.jpg', legende: 'Le détail' },
-        { src: 'assets/sur-mesure/table-oco/plateau.jpg', legende: 'Le plateau' },
+        { src: '/assets/sur-mesure/table-oco/vue-face.jpg', legende: 'La pièce' },
+        { src: '/assets/sur-mesure/table-oco/detail.jpg', legende: 'Le détail' },
+        { src: '/assets/sur-mesure/table-oco/plateau.jpg', legende: 'Le plateau' },
       ],
       demande: 'Une petite table d’appoint en bois massif, sculpturale mais simple, déclinée en noyer et en chêne.',
       caracteristiques: {
@@ -158,13 +194,20 @@
     },
     {
       nom: 'Chaise Terracotta', // NOM À CONFIRMER
+      en: {
+        nom: 'Terracotta Chair',
+        secteur: 'Restaurants',
+        legendes: ['The piece', 'Back view', 'The detail'],
+        nuancier: ['Terracotta velvet', 'Matt black lacquer', 'Tone-on-tone piping'],
+        texte: 'A high back with cut-away wings that embraces without enclosing, upholstered in terracotta velvet and outlined with piping. Fluted sabre legs in black lacquer, with carved blocks at the corners of the seat rail.',
+      },
       projet: 'Projet à confirmer',
       secteur: 'Restauration', // À CONFIRMER
-      image: 'assets/sur-mesure/chaise-terracotta/vue-face.jpg',
+      image: '/assets/sur-mesure/chaise-terracotta/vue-face.jpg',
       triptyque: [
-        { src: 'assets/sur-mesure/chaise-terracotta/vue-face.jpg', legende: 'La pièce' },
-        { src: 'assets/sur-mesure/chaise-terracotta/vue-arriere.jpg', legende: 'Vue arrière' },
-        { src: 'assets/sur-mesure/chaise-terracotta/detail.jpg', legende: 'Le détail' },
+        { src: '/assets/sur-mesure/chaise-terracotta/vue-face.jpg', legende: 'La pièce' },
+        { src: '/assets/sur-mesure/chaise-terracotta/vue-arriere.jpg', legende: 'Vue arrière' },
+        { src: '/assets/sur-mesure/chaise-terracotta/detail.jpg', legende: 'Le détail' },
       ],
       demande: 'Une chaise de salle enveloppante, en velours chaud, avec un piètement qui rappelle le mobilier classique.',
       caracteristiques: {
@@ -189,7 +232,7 @@
       nom: 'Table Colonnes',
       projet: 'Luteca',
       secteur: 'Restauration',
-      image: 'assets/realisations/luteca/03.jpg',
+      image: '/assets/realisations/luteca/03.jpg',
       demande: 'Une grande table d’hôtes qui rappelle les colonnes du lieu, assez longue pour dix couverts.',
       caracteristiques: {
         'Matériaux': 'Chêne massif',
@@ -214,7 +257,7 @@
       nom: 'Fauteuil Compas',
       projet: 'Luteca',
       secteur: 'Restauration',
-      image: 'assets/realisations/luteca/05.jpg',
+      image: '/assets/realisations/luteca/05.jpg',
       demande: 'Un fauteuil de salle confortable, léger à déplacer, dans le rose poudré de la charte du restaurant.',
       caracteristiques: {
         'Matériaux': 'Noyer massif, velours de coton',
@@ -240,7 +283,7 @@
       nom: 'Banquette Soleil',
       projet: 'Le mobilier',
       secteur: 'Restauration',
-      image: 'assets/realisations/projet-4/03.jpg',
+      image: '/assets/realisations/projet-4/03.jpg',
       demande: 'Des sièges enveloppants qui apportent de la couleur et de la chaleur à une salle très minérale.',
       caracteristiques: {
         'Matériaux': 'Structure hêtre, mousse haute résilience, velours',
@@ -266,7 +309,7 @@
       nom: 'Commode Mosaïque',
       projet: 'Projet 3',
       secteur: 'Hôtellerie',
-      image: 'assets/realisations/maison-heller/02.jpg',
+      image: '/assets/realisations/maison-heller/02.jpg',
       demande: 'Un meuble de rangement qui devienne la pièce forte de la suite, avec une façade travaillée comme une sculpture.',
       caracteristiques: {
         'Matériaux': 'Chêne massif et placage chêne',
@@ -291,7 +334,7 @@
       nom: 'Tête de lit Palissandre',
       projet: 'Projet 3',
       secteur: 'Hôtellerie',
-      image: 'assets/realisations/maison-heller/03.jpg',
+      image: '/assets/realisations/maison-heller/03.jpg',
       demande: 'Une tête de lit chaleureuse qui intègre l’éclairage et les chevets, sans un seul fil apparent.',
       caracteristiques: {
         'Matériaux': 'Placage palissandre, cuir pleine fleur, laiton',
@@ -317,7 +360,7 @@
       nom: 'Bar Travertin',
       projet: 'VF Architecture',
       secteur: 'Immobilier de prestige',
-      image: 'assets/realisations/vf-architecture/13.jpg',
+      image: '/assets/realisations/vf-architecture/13.jpg',
       demande: 'Un bar de réception pour une villa, monolithique, mis en valeur par la lumière.',
       caracteristiques: {
         'Matériaux': 'Travertin, onyx rétroéclairé, acier noirci',
@@ -340,12 +383,25 @@
     },
   ];
 
+  // Version anglaise du site (/en/) : on remplace les textes par ceux du champ "en"
+  const EN = document.documentElement.lang === 'en';
+  if (EN) {
+    PIECES.forEach((p) => {
+      if (!p.en) return;
+      p.nom = p.en.nom;
+      p.secteur = p.en.secteur;
+      p.texte = p.en.texte;
+      (p.triptyque || []).forEach((t, i) => { t.legende = p.en.legendes[i]; });
+      p.nuancier.forEach((n, i) => { n.nom = p.en.nuancier[i]; });
+    });
+  }
+
   const esc = (str) => String(str).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const num = (i) => String(i + 1).padStart(2, '0');
 
   // Pastilles des matériaux
   const swatchesHTML = (p) => `
-    <ul class="sm-swatches" aria-label="Matériaux choisis">
+    <ul class="sm-swatches" aria-label="${EN ? 'Selected materials' : 'Matériaux choisis'}">
       ${p.nuancier.map((n) => `<li><span class="sm-swatches__chip" style="background:${esc(n.couleur)}"></span>${esc(n.nom)}</li>`).join('')}
     </ul>`;
 
@@ -354,7 +410,7 @@
   const triptyques = document.getElementById('view-triptyque');
   const tripFig = (p, t) => `
           <figure class="sm-trip__fig">
-            <img src="${esc(t.src)}" alt="${esc(p.nom)} : ${esc(t.legende)}" loading="lazy">
+            <img src="${esc(t.src)}" alt="${esc(p.nom)}${EN ? ': ' : ' : '}${esc(t.legende)}" loading="lazy">
           </figure>`;
   triptyques.innerHTML = PIECES.filter((p) => p.triptyque).map((p) => {
     const i = PIECES.indexOf(p);
@@ -368,7 +424,7 @@
       </div>
       <div class="sm-trip__text">
         <div>
-          <p class="sm-eyebrow">Pièce ${num(i)} · ${esc(p.secteur)}</p>
+          <p class="sm-eyebrow">${EN ? 'Piece' : 'Pièce'} ${num(i)} · ${esc(p.secteur)}</p>
           <h2 class="sm-title">${esc(p.nom)}</h2>
         </div>
         <div>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO:start -->
+  <meta name="description" content="PHB70 designs and manufactures bespoke furniture for hotels, restaurants and luxury residences, from technical design to delivery.">
+  <link rel="canonical" href="https://www.phb70.com/en/">
+  <link rel="alternate" hreflang="fr" href="https://www.phb70.com/">
+  <link rel="alternate" hreflang="en" href="https://www.phb70.com/en/">
+  <link rel="alternate" hreflang="x-default" href="https://www.phb70.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="fr_FR">
+  <meta property="og:site_name" content="PHB70">
+  <meta property="og:title" content="PHB70 — Bespoke furniture for luxury hospitality">
+  <meta property="og:description" content="PHB70 designs and manufactures bespoke furniture for hotels, restaurants and luxury residences, from technical design to delivery.">
+  <meta property="og:url" content="https://www.phb70.com/en/">
+  <meta property="og:image" content="https://www.phb70.com/assets/og-image.jpg">
+  <!-- SEO:end -->
+  <title>PHB70 — Bespoke furniture for luxury hospitality</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="/assets/favicon-180.png">
+  <link rel="preload" href="/assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
+  <!-- Intro animée du logo : décidée avant l'affichage pour éviter tout flash du site -->
+  <script>
+    (function () {
+      var root = document.documentElement;
+      try {
+        if (sessionStorage.getItem('phb70_intro_played')) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      } catch (e) { return; }
+      root.classList.add('phb-intro', 'is-intro-active');
+      // Sécurité : si l'intro n'a pas démarré au bout de 4 s, on affiche le site
+      setTimeout(function () {
+        if (!root.hasAttribute('data-intro-started')) {
+          root.classList.remove('phb-intro', 'is-intro-active');
+          document.dispatchEvent(new Event('phb70:intro-hero'));
+        }
+      }, 4000);
+    })();
+  </script>
+  <style>
+    #introBackdrop,
+    #introLogoStage {
+      display: none;
+    }
+    html.phb-intro #introBackdrop {
+      display: block;
+      position: fixed;
+      inset: 0;
+      z-index: 99990;
+      background: #F7F5EF;
+    }
+    html.phb-intro #introLogoStage {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: min(960px, 86vw);
+      aspect-ratio: 1040 / 240;
+      z-index: 99995;
+      opacity: 0;
+      pointer-events: none;
+    }
+    #introLogoStage svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    /* Pendant l'intro : header et carrousel cachés, logo du header remplacé par le logo animé */
+    html.is-intro-active .header,
+    html.is-intro-active .carousel {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+    html.phb-intro .header__logo img {
+      visibility: hidden;
+    }
+    html.phb-intro .carousel__text,
+    html.phb-intro .carousel__dots {
+      visibility: hidden;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Intro animée (affichée seulement à la 1re visite de la session) -->
+  <div id="introBackdrop" aria-hidden="true"></div>
+  <div id="introLogoStage" aria-hidden="true">
+    <svg id="phb-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 240" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+      <defs>
+        <linearGradient id="facet" x1="0" y1="0" x2="1" y2="1">
+          <stop stop-color="#121212" />
+          <stop offset=".48" stop-color="#6a6a6a" />
+          <stop offset="1" stop-color="#d0d0d0" />
+        </linearGradient>
+        <linearGradient id="facetH" x1="0" y1="1" x2="1" y2="0">
+          <stop stop-color="#151515" />
+          <stop offset="1" stop-color="#aaa" />
+        </linearGradient>
+        <linearGradient id="facetB" x1="0" y1="0" x2="1" y2="1">
+          <stop stop-color="#0c0c0c" />
+          <stop offset=".55" stop-color="#6b6b6b" />
+          <stop offset="1" stop-color="#dedede" />
+        </linearGradient>
+      </defs>
+      <g id="phb70">
+        <g id="letter-p">
+          <path id="p-base" d="M 12,29 H 153 C 186,29 211,50 211,80 C 211,110 187,133 154,133 H 47 V 199 H 12 V 106 H 153 C 170,106 178,96 178,81 C 178,67 169,57 153,57 H 12 Z" fill="#0a0a0a" />
+          <path id="p-facet" d="M12 106 H47 V153 L12 199 Z" fill="url(#facet)" />
+          <path id="p-edge" d="M12 199 L47 153 V199 Z" fill="#575757" opacity=".5" />
+        </g>
+        <g id="letter-h">
+          <path id="h-base" d="M239 29 H274 V98 H408 V29 H443 V199 H408 V126 H274 V199 H239 Z" fill="#0a0a0a" />
+          <path id="h-facet" d="M239 98 L274 98 L321 98 L274 126 L239 151 Z" fill="url(#facetH)" />
+        </g>
+        <g id="letter-b">
+          <path id="b-base" fill="#0a0a0a" fill-rule="evenodd" d="M475 29 H607 C648 29 666 47 666 75 C666 94 656 105 648 110 C674 118 680 134 680 155 C680 181 660 199 608 199 H475 Z M510 57 V99 H606 C628 99 638 91 638 79 C638 64 626 57 606 57 Z M510 127 V171 H607 C633 171 648 164 648 149 C648 136 634 127 607 127 Z" />
+          <path id="b-facet-top" d="M475 29 H510 V57 L475 99 Z" fill="url(#facetB)" />
+          <path id="b-facet-middle" d="M475 99 L510 57 V99 L475 127 Z" fill="#575757" opacity=".55" />
+          <path id="b-facet-bottom" d="M475 127 H510 V171 L475 199 Z" fill="url(#facetB)" />
+        </g>
+        <g id="letter-7">
+          <path id="seven-base" d="M695 35 H822 V44 L730 194 H717 L805 45 H695 Z" fill="#101010" />
+        </g>
+        <g id="letter-0">
+          <ellipse id="zero-base" cx="909" cy="114" rx="77" ry="81" fill="none" stroke="#111" stroke-width="9" />
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <header class="header header--transparent">
+    <a href="/en/" class="header__logo" aria-label="PHB70 — Home">
+      <img src="/assets/logo-phb70.svg" width="173" height="40" alt="PHB70 logo">
+    </a>
+    <nav class="header__nav">
+      <ul>
+        <li><a href="/en/" class="active">Home</a></li>
+        <li><a href="/en/team">Our team</a></li>
+        <li><a href="/en/method">Our method</a></li>
+        <li><a href="/en/projects">Projects</a></li>
+        <li><a href="/en/bespoke">Bespoke</a></li>
+        <li><a href="/en/contact" class="header__cta">Contact</a></li>
+        <li class="header__lang"><a href="/" hreflang="fr" lang="fr" aria-label="Version française">FR</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="carousel" aria-roledescription="carousel" aria-label="Our projects">
+      <div class="carousel__track">
+        <img class="carousel__slide is-active" src="/assets/carrousel/slide-1.png" alt="Bedroom with a wooden headboard, a lit stone wall and a marble bedside table">
+        <img class="carousel__slide" src="/assets/carrousel/slide-2.png" alt="Living room with a wooden wall sculpture, a curved sofa and a solid wood coffee table">
+      </div>
+
+      <div class="carousel__text">
+        <h1 class="carousel__title">PHB 70</h1>
+        <p class="carousel__tagline">Bespoke furniture for exceptional places.</p>
+        <p class="carousel__intro">PHB70 works with hotels, restaurants and luxury residences, from design to manufacturing.</p>
+        <div class="carousel__actions">
+          <a class="btn btn--light" href="/en/projects">Discover our projects</a>
+          <a class="btn btn--outline" href="/en/contact">Contact us</a>
+        </div>
+      </div>
+
+      <div class="carousel__dots"></div>
+    </section>
+
+    <section class="apropos">
+      <div class="apropos__inner">
+        <header class="section-head">
+          <p class="section-eyebrow">Our mission</p>
+          <h2 class="section-title">Bringing <em>your project</em> to life</h2>
+        </header>
+        <div class="apropos__body">
+          <p class="apropos__lead">PHB70 designs and manufactures bespoke furniture for hotels, restaurants and high-end residences.</p>
+          <p class="apropos__text">Our network of craftsmen and partner workshops, built over more than 20&nbsp;years, allows us to deliver the boldest projects. We favour short supply chains to keep costs and lead times under control. Our in-house design office follows every piece, from prototype to quality control before shipping.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="galerie galerie--trio" aria-label="A glimpse of our projects">
+      <img class="galerie__img" src="/assets/galerie-trio/photo-1.png" alt="Glass wine cellar framed by wood panelling and gilded columns, reflected in a lacquered table">
+      <img class="galerie__img" src="/assets/galerie-trio/photo-2.png" alt="Bar with a marble counter, wooden stools and cane armchairs">
+      <img class="galerie__img" src="/assets/galerie-trio/photo-3.png" alt="Dark spiral staircase with a gilded wall, lit by globe pendant lights">
+    </section>
+
+    <section class="expertises">
+      <header class="section-head">
+        <p class="section-eyebrow">Expertise</p>
+        <h2 class="section-title">Our <em>sectors</em></h2>
+      </header>
+
+      <div class="expertises__grid">
+        <a class="card card--arrondi card--recul" href="/en/projects?secteur=hotellerie">
+          <img src="/assets/expertises/hotellerie.png" alt="Hotel topped by a half-timbered villa with a turret, on an ivy-covered roof garden">
+          <div class="card__content">
+            <h3 class="card__title">Hospitality</h3>
+          </div>
+        </a>
+        <a class="card card--centre" href="/en/projects?secteur=restauration">
+          <img src="/assets/expertises/restauration.png" alt="Restaurant dining room with wooden chairs and banquettes">
+          <div class="card__content">
+            <h3 class="card__title">Restaurants</h3>
+          </div>
+        </a>
+        <a class="card card--arrondi-inverse card--recul card--ciel-bleu" href="/en/projects?secteur=immobilier">
+          <img src="/assets/expertises/immobilier-prestige.png" alt="White contemporary villa with an infinity pool, sun loungers and palm trees">
+          <div class="card__content">
+            <h3 class="card__title">Luxury real estate</h3>
+          </div>
+        </a>
+      </div>
+
+      <div class="expertises__link">
+        <a href="/en/projects">See all our projects &rarr;</a>
+      </div>
+    </section>
+
+    <section class="galerie" aria-label="Project gallery">
+      <img class="galerie__img galerie__img--1" src="/assets/galerie/photo-1.png" alt="Large white modular U-shaped sofa, round smoked-glass coffee table and a rug with golden lines">
+      <img class="galerie__img galerie__img--2" src="/assets/galerie/photo-2.png" alt="White backlit wall sculpture with wavy shapes, above a light-coloured sofa">
+      <img class="galerie__img galerie__img--3" src="/assets/galerie/photo-3.png" alt="Enveloping camel bouclé armchair in front of a cast-iron radiator">
+      <img class="galerie__img galerie__img--4" src="/assets/galerie/photo-4.png" alt="Dining room with a marble-effect ceramic table on a sculptural base and bouclé fabric chairs">
+    </section>
+
+    <section class="agences">
+      <header class="section-head">
+        <p class="section-eyebrow">Locations</p>
+        <h2 class="section-title">Our <em>offices</em></h2>
+      </header>
+
+      <div class="agences__list">
+        <article class="agence">
+          <div class="agence__body">
+            <img class="agence__logo" src="/assets/logo-phb70.svg" alt="" aria-hidden="true">
+            <h3 class="agence__city">Paris</h3>
+            <span class="agence__line" aria-hidden="true"></span>
+            <a class="agence__phone" href="tel:+33682840308">+33 6 82 84 03 08</a>
+            <address class="agence__address">
+              53 bis rue de Passy<br>
+              75016 Paris<br>
+              France
+            </address>
+          </div>
+        </article>
+        <article class="agence">
+          <div class="agence__body">
+            <img class="agence__logo" src="/assets/logo-phb70.svg" alt="" aria-hidden="true">
+            <h3 class="agence__city">New York</h3>
+            <span class="agence__line" aria-hidden="true"></span>
+            <a class="agence__phone" href="tel:+19173014228">+1 917 301 42 28</a>
+            <address class="agence__address">
+              40 East 94th Street<br>
+              New York, NY 10128<br>
+              United States
+            </address>
+          </div>
+        </article>
+        <article class="agence">
+          <div class="agence__body">
+            <img class="agence__logo" src="/assets/logo-phb70.svg" alt="" aria-hidden="true">
+            <h3 class="agence__city">Luxembourg</h3>
+            <span class="agence__line" aria-hidden="true"></span>
+            <a class="agence__phone" href="tel:+3522021182203">+352 20 21 18 22 03</a>
+            <address class="agence__address">
+              4 place de Paris<br>
+              L-2314 Luxembourg<br>
+              Luxembourg
+            </address>
+          </div>
+        </article>
+        <article class="agence">
+          <div class="agence__body">
+            <img class="agence__logo" src="/assets/logo-phb70.svg" alt="" aria-hidden="true">
+            <h3 class="agence__city">Portugal</h3>
+            <span class="agence__line" aria-hidden="true"></span>
+            <a class="agence__phone" href="tel:+351910302959">+351 910 302 959</a>
+            <address class="agence__address">
+              14 avenida 20 de Maio<br>
+              4590-182 Paços de Ferreira<br>
+              Portugal
+            </address>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="confiance">
+      <header class="section-head">
+        <p class="section-eyebrow">References</p>
+        <h2 class="section-title">They <em>trust us</em></h2>
+      </header>
+
+      <!-- Scrolling band: the list is duplicated for a seamless loop -->
+      <div class="marquee">
+        <div class="marquee__track">
+          <ul class="marquee__list">
+            <li>Atelier d'Amis</li>
+            <li>Philippe Starck</li>
+            <li>Hilton</li>
+            <li>Marriott</li>
+            <li>Small Luxury Hotels</li>
+            <li>Luteca</li>
+            <li>V&amp;F Architecture</li>
+            <li>Empreinte Design</li>
+            <li>Hôtel Norman</li>
+          </ul>
+          <ul class="marquee__list" aria-hidden="true">
+            <li>Atelier d'Amis</li>
+            <li>Philippe Starck</li>
+            <li>Hilton</li>
+            <li>Marriott</li>
+            <li>Small Luxury Hotels</li>
+            <li>Luteca</li>
+            <li>V&amp;F Architecture</li>
+            <li>Empreinte Design</li>
+            <li>Hôtel Norman</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-cta">
+      <div class="contact-cta__inner">
+        <header class="section-head">
+          <p class="section-eyebrow">Contact</p>
+          <h2 class="section-title">Get in <em>touch</em></h2>
+        </header>
+        <div class="contact-cta__side">
+          <p class="contact-cta__text">A hotel, restaurant or residential project? Let’s talk and design your bespoke furniture together.</p>
+          <a class="btn btn--dark" href="/en/contact">Contact us &rarr;</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__top">
+      <a href="/en/" class="footer__logo" aria-label="PHB70 — Home">
+        <img src="/assets/logo-phb70.svg" width="191" height="44" alt="PHB70 logo">
+      </a>
+      <p class="footer__tagline">Bespoke furniture<br><em>for exceptional places.</em></p>
+    </div>
+
+    <div class="footer__grid">
+      <div class="footer__col">
+        <h3 class="footer__heading">Navigation</h3>
+        <ul class="footer__nav">
+          <li><a class="footer__link" href="/en/">Home</a></li>
+          <li><a class="footer__link" href="/en/team">Our team</a></li>
+          <li><a class="footer__link" href="/en/method">Our method</a></li>
+          <li><a class="footer__link" href="/en/projects">Projects</a></li>
+          <li><a class="footer__link" href="/en/bespoke">Bespoke</a></li>
+          <li><a class="footer__link" href="/en/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h3 class="footer__heading">Paris</h3>
+        <a class="footer__link" href="tel:+33682840308">+33 6 82 84 03 08</a>
+        <address class="footer__address">53 bis rue de Passy<br>75016 Paris<br>France</address>
+      </div>
+      <div class="footer__col">
+        <h3 class="footer__heading">New York</h3>
+        <a class="footer__link" href="tel:+19173014228">+1 917 301 42 28</a>
+        <address class="footer__address">40 East 94th Street<br>New York, NY 10128<br>United States</address>
+      </div>
+      <div class="footer__col">
+        <h3 class="footer__heading">Luxembourg</h3>
+        <a class="footer__link" href="tel:+3522021182203">+352 20 21 18 22 03</a>
+        <address class="footer__address">4 place de Paris<br>L-2314 Luxembourg<br>Luxembourg</address>
+      </div>
+      <div class="footer__col">
+        <h3 class="footer__heading">Portugal</h3>
+        <a class="footer__link" href="tel:+351910302959">+351 910 302 959</a>
+        <address class="footer__address">14 avenida 20 de Maio<br>4590-182 Paços de Ferreira<br>Portugal</address>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>&copy; 2026 PHB70. All rights reserved.</p>
+      <p class="footer__credit">Website by <a class="footer__link footer__credit-link" href="https://hosa-group.fr/" target="_blank" rel="noopener">HOSA GROUP</a></p>
+      <nav class="footer__legal" aria-label="Legal information">
+        <a class="footer__link" href="/en/legal-notice">Legal notice</a>
+        <a class="footer__link" href="/en/privacy">Privacy policy</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="/assets/vendor/gsap.min.js"></script>
+  <script src="/header.js"></script>
+  <script src="/carousel.js"></script>
+  <script src="/intro.js"></script>
+  <script src="/reveal.js"></script>
+</body>
+</html>

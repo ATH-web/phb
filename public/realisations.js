@@ -4,6 +4,7 @@
   // ===== Liste des projets =====
   // categorie : "hotellerie", "restauration" ou "immobilier"
   // lieu : facultatif (laisser '' s'il n'est pas connu)
+  // en : facultatif, textes de la version anglaise (titre, etiquette, texte) qui remplacent les textes français.
   // images : une entrée par page du livre.
   //   - 'photo.jpg'               → une photo seule sur la page
   //   - ['photo1.jpg', 'photo2.jpg'] → deux photos l'une au-dessus de l'autre (idéal pour les photos en largeur)
@@ -21,115 +22,147 @@
       lieu: '',
       categorie: 'restauration',
       etiquette: 'Mobilier haut de gamme',
+      en: {
+        etiquette: 'High-end furniture',
+        texte: 'Deeply rooted in the craft traditions that inspired the great Mexican modernist designers of the 20th century.',
+      },
       texte: 'Profondément ancrés dans les traditions artisanales qui ont inspiré le travail des plus grands designers modernistes mexicains du XXe siècle.',
-      couverture: 'assets/realisations/luteca/couverture.jpg',
-      photoIntro: 'assets/realisations/luteca/salle.jpg',
+      couverture: '/assets/realisations/luteca/couverture.jpg',
+      photoIntro: '/assets/realisations/luteca/salle.jpg',
       images: [
-        'assets/realisations/luteca/oco-l1.jpg',
-        { decale: ['assets/realisations/luteca/oco-w2.jpg', 'assets/realisations/luteca/oco-w1.jpg'] },
-        ['assets/realisations/luteca/table-ovale-w2.jpg', 'assets/realisations/luteca/table-ovale-face.jpg'],
-        { decale: ['assets/realisations/luteca/table-ovale-d1.jpg', 'assets/realisations/luteca/table-ronde-w1.jpg'] },
-        'assets/realisations/luteca/chaise-eugenio-w1.jpg',
-        'assets/realisations/luteca/chaise-eugenio-w2.jpg',
-        'assets/realisations/luteca/buffet-tresse.jpg',
-        { decale: ['assets/realisations/luteca/buffet-tresse-d2.jpg', 'assets/realisations/luteca/buffet-tresse-d5.jpg'] },
-        'assets/realisations/luteca/san-miguel-terrasse.jpg',
-        { decale: ['assets/realisations/luteca/san-miguel-l1.jpg', 'assets/realisations/luteca/san-miguel-w1.jpg'] },
+        '/assets/realisations/luteca/oco-l1.jpg',
+        { decale: ['/assets/realisations/luteca/oco-w2.jpg', '/assets/realisations/luteca/oco-w1.jpg'] },
+        ['/assets/realisations/luteca/table-ovale-w2.jpg', '/assets/realisations/luteca/table-ovale-face.jpg'],
+        { decale: ['/assets/realisations/luteca/table-ovale-d1.jpg', '/assets/realisations/luteca/table-ronde-w1.jpg'] },
+        '/assets/realisations/luteca/chaise-eugenio-w1.jpg',
+        '/assets/realisations/luteca/chaise-eugenio-w2.jpg',
+        '/assets/realisations/luteca/buffet-tresse.jpg',
+        { decale: ['/assets/realisations/luteca/buffet-tresse-d2.jpg', '/assets/realisations/luteca/buffet-tresse-d5.jpg'] },
+        '/assets/realisations/luteca/san-miguel-terrasse.jpg',
+        { decale: ['/assets/realisations/luteca/san-miguel-l1.jpg', '/assets/realisations/luteca/san-miguel-w1.jpg'] },
       ],
     },
     {
       titre: 'Norman',
       lieu: '',
       categorie: 'hotellerie',
+      en: { texte: 'A hotel designed like a series of Parisian apartments, with design pieces and eclectic furniture.' },
       texte: 'Projet d’hôtel conçu comme des appartements parisiens, avec des pièces de design et un mobilier éclectique.',
-      couverture: 'assets/realisations/norman/05.jpg',
+      couverture: '/assets/realisations/norman/05.jpg',
       images: [
-        'assets/realisations/norman/salon-vert.jpg',
-        'assets/realisations/norman/tete-de-lit.jpg',
-        'assets/realisations/norman/chambre.jpg',
-        'assets/realisations/norman/table-basse.jpg',
-        'assets/realisations/norman/chambre-lit-cuir.jpg',
-        ['assets/realisations/norman/chambre-rangements.jpg', 'assets/realisations/norman/coin-salon.jpg'],
-        'assets/realisations/norman/salon-escalier.jpg',
-        ['assets/realisations/norman/bar.jpg', 'assets/realisations/norman/restaurant.jpg'],
-        'assets/realisations/norman/02.jpg',
-        ['assets/realisations/norman/03.jpg', 'assets/realisations/norman/04.jpg'],
-        'assets/realisations/norman/01.jpg',
-        'assets/realisations/norman/06.jpg',
+        '/assets/realisations/norman/salon-vert.jpg',
+        '/assets/realisations/norman/tete-de-lit.jpg',
+        '/assets/realisations/norman/chambre.jpg',
+        '/assets/realisations/norman/table-basse.jpg',
+        '/assets/realisations/norman/chambre-lit-cuir.jpg',
+        ['/assets/realisations/norman/chambre-rangements.jpg', '/assets/realisations/norman/coin-salon.jpg'],
+        '/assets/realisations/norman/salon-escalier.jpg',
+        ['/assets/realisations/norman/bar.jpg', '/assets/realisations/norman/restaurant.jpg'],
+        '/assets/realisations/norman/02.jpg',
+        ['/assets/realisations/norman/03.jpg', '/assets/realisations/norman/04.jpg'],
+        '/assets/realisations/norman/01.jpg',
+        '/assets/realisations/norman/06.jpg',
       ],
     },
     {
       titre: 'VF Architecture',
       lieu: '',
       categorie: 'immobilier',
+      en: { texte: 'VF ARCHITECTURE entrusts us with furnishing its luxury residential projects. From the choice of materials to the design of bespoke furniture, we compose interiors in tune with the architecture of each house.' },
       texte: 'VF ARCHITECTURE nous fait confiance pour l’ameublement de ses projets de résidences de prestige. Du choix des matières à la conception de mobilier sur mesure, nous composons des intérieurs en accord avec l’architecture de chaque maison.',
-      couverture: 'assets/realisations/vf-architecture/couverture.jpg', // photo de couverture (n'apparaît pas dans le livre)
+      couverture: '/assets/realisations/vf-architecture/couverture.jpg', // photo de couverture (n'apparaît pas dans le livre)
       images: [
-        ['assets/realisations/vf-architecture/01.jpg', 'assets/realisations/vf-architecture/03.jpg'],
-        ['assets/realisations/vf-architecture/04.jpg', 'assets/realisations/vf-architecture/05.jpg'],
-        ['assets/realisations/vf-architecture/06.jpg', 'assets/realisations/vf-architecture/07.jpg'],
-        ['assets/realisations/vf-architecture/09.jpg', 'assets/realisations/vf-architecture/11.jpg'],
-        'assets/realisations/vf-architecture/08.jpg',
-        'assets/realisations/vf-architecture/10.jpg',
-        ['assets/realisations/vf-architecture/12.jpg', 'assets/realisations/vf-architecture/13.jpg'],
-        ['assets/realisations/vf-architecture/14.jpg', 'assets/realisations/vf-architecture/15.jpg'],
+        ['/assets/realisations/vf-architecture/01.jpg', '/assets/realisations/vf-architecture/03.jpg'],
+        ['/assets/realisations/vf-architecture/04.jpg', '/assets/realisations/vf-architecture/05.jpg'],
+        ['/assets/realisations/vf-architecture/06.jpg', '/assets/realisations/vf-architecture/07.jpg'],
+        ['/assets/realisations/vf-architecture/09.jpg', '/assets/realisations/vf-architecture/11.jpg'],
+        '/assets/realisations/vf-architecture/08.jpg',
+        '/assets/realisations/vf-architecture/10.jpg',
+        ['/assets/realisations/vf-architecture/12.jpg', '/assets/realisations/vf-architecture/13.jpg'],
+        ['/assets/realisations/vf-architecture/14.jpg', '/assets/realisations/vf-architecture/15.jpg'],
       ],
     },
     {
       titre: 'Sainte-Maxime',
       lieu: '',
       categorie: 'immobilier',
+      en: { texte: 'Bespoke furnishing for a contemporary villa in Sainte-Maxime.' },
       texte: 'Projet d’ameublement sur mesure pour une villa contemporaine à Sainte-Maxime.',
-      couverture: 'assets/realisations/projet-5/01.jpg',
+      couverture: '/assets/realisations/projet-5/01.jpg',
       images: [
-        ['assets/realisations/projet-5/02.jpg', 'assets/realisations/projet-5/03.jpg'],
-        'assets/realisations/projet-5/salle-a-manger.jpg',
-        'assets/realisations/projet-5/05.jpg',
-        ['assets/realisations/projet-5/06.jpg', 'assets/realisations/projet-5/07.jpg'],
-        'assets/realisations/projet-5/chambre.jpg',
-        'assets/realisations/projet-5/commode.jpg',
-        'assets/realisations/projet-5/chambre-suspensions.jpg',
-        'assets/realisations/projet-5/coin-fauteuil.jpg',
-        'assets/realisations/projet-5/salle-de-bain.jpg',
-        'assets/realisations/projet-5/vasque.jpg',
+        ['/assets/realisations/projet-5/02.jpg', '/assets/realisations/projet-5/03.jpg'],
+        '/assets/realisations/projet-5/salle-a-manger.jpg',
+        '/assets/realisations/projet-5/05.jpg',
+        ['/assets/realisations/projet-5/06.jpg', '/assets/realisations/projet-5/07.jpg'],
+        '/assets/realisations/projet-5/chambre.jpg',
+        '/assets/realisations/projet-5/commode.jpg',
+        '/assets/realisations/projet-5/chambre-suspensions.jpg',
+        '/assets/realisations/projet-5/coin-fauteuil.jpg',
+        '/assets/realisations/projet-5/salle-de-bain.jpg',
+        '/assets/realisations/projet-5/vasque.jpg',
       ],
     },
     {
       titre: 'Maison Heller',
       lieu: '',
       categorie: 'hotellerie',
+      en: { texte: 'A project conceived by Philippe Starck, who entrusted us with all of the bespoke furniture and joinery.' },
       texte: 'Projet imaginé par Philippe Starck, qui nous a confié la réalisation de l’ensemble du mobilier sur mesure et de la menuiserie.',
-      couverture: 'assets/realisations/maison-heller/couverture.jpg',
+      couverture: '/assets/realisations/maison-heller/couverture.jpg',
       images: [
-        'assets/realisations/maison-heller/couloir.jpg',
-        ['assets/realisations/maison-heller/chambre-armoire.jpg', 'assets/realisations/maison-heller/chambre-bureau.jpg'],
-        'assets/realisations/maison-heller/table-de-chevet.jpg',
-        ['assets/realisations/maison-heller/dressing.jpg', 'assets/realisations/maison-heller/bureau-lampes.jpg'],
-        'assets/realisations/maison-heller/bar.jpg',
-        'assets/realisations/maison-heller/restaurant-vitraux.jpg',
-        'assets/realisations/maison-heller/bar-vitrail.jpg',
-        'assets/realisations/maison-heller/table-portrait.jpg',
+        '/assets/realisations/maison-heller/couloir.jpg',
+        ['/assets/realisations/maison-heller/chambre-armoire.jpg', '/assets/realisations/maison-heller/chambre-bureau.jpg'],
+        '/assets/realisations/maison-heller/table-de-chevet.jpg',
+        ['/assets/realisations/maison-heller/dressing.jpg', '/assets/realisations/maison-heller/bureau-lampes.jpg'],
+        '/assets/realisations/maison-heller/bar.jpg',
+        '/assets/realisations/maison-heller/restaurant-vitraux.jpg',
+        '/assets/realisations/maison-heller/bar-vitrail.jpg',
+        '/assets/realisations/maison-heller/table-portrait.jpg',
       ],
     },
     {
       titre: 'Le mobilier',
+      en: { titre: 'The furniture' },
       lieu: '',
       categorie: 'restauration',
       texte: '', // pas de texte d'introduction
-      couverture: 'assets/realisations/projet-4/01.jpg',
+      couverture: '/assets/realisations/projet-4/01.jpg',
       images: [
-        ['assets/realisations/projet-4/02.jpg', 'assets/realisations/projet-4/03.jpg'],
-        'assets/realisations/projet-4/05.jpg',
-        'assets/realisations/projet-4/04.jpg',
-        'assets/realisations/projet-4/06.jpg',
+        ['/assets/realisations/projet-4/02.jpg', '/assets/realisations/projet-4/03.jpg'],
+        '/assets/realisations/projet-4/05.jpg',
+        '/assets/realisations/projet-4/04.jpg',
+        '/assets/realisations/projet-4/06.jpg',
       ],
     },
   ];
 
-  const CATEGORIES = {
+  // Version anglaise du site (/en/) : textes du champ "en" de chaque projet, s'ils existent
+  const EN = document.documentElement.lang === 'en';
+  if (EN) PROJETS.forEach((p) => Object.assign(p, p.en));
+
+  const CATEGORIES = EN ? {
+    hotellerie: 'Hospitality',
+    restauration: 'Restaurants',
+    immobilier: 'Luxury real estate',
+  } : {
     hotellerie: 'Hôtellerie',
     restauration: 'Restauration',
     immobilier: 'Immobilier de prestige',
+  };
+  const T = EN ? {
+    ouvrir: 'Open the book: ',
+    alt: 'PHB70 project: ',
+    couverture: 'Cover',
+    fin: 'End',
+    page: 'Page',
+    pages: 'Pages',
+  } : {
+    ouvrir: 'Ouvrir le livre : ',
+    alt: 'Réalisation PHB70 : ',
+    couverture: 'Couverture',
+    fin: 'Fin',
+    page: 'Page',
+    pages: 'Pages',
   };
 
   const esc = (str) => String(str).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -149,7 +182,7 @@
   // ===== Génération des livres =====
   document.querySelector('.books--cabinet').innerHTML = PROJETS.map((p, i) => `
       <div class="book-item" data-cat="${p.categorie}">
-        <button class="book" type="button" data-index="${i}" aria-label="Ouvrir le livre : ${esc(p.titre)}">
+        <button class="book" type="button" data-index="${i}" aria-label="${esc(T.ouvrir + p.titre)}">
           <span class="book__body">
             ${coverHTML(p)}
           </span>
@@ -206,7 +239,7 @@
       </div>`);
     // Page de droite, face à la description : la photo de couverture, seule
     const coverSrc = p.photoIntro || p.couverture || [].concat(p.images[0])[0];
-    const alt = esc(`Réalisation PHB70 : ${p.titre}${p.lieu ? `, ${p.lieu}` : ''}`);
+    const alt = esc(`${T.alt}${p.titre}${p.lieu ? `, ${p.lieu}` : ''}`);
     pages.push(`<div class="page page--photo"><img src="${esc(coverSrc)}" alt="${alt}" loading="lazy"></div>`);
     p.images.forEach((entry) => {
       if (entry && entry.decale) {
@@ -220,7 +253,7 @@
     });
     // Nombre de pages pair (double page), puis 4e de couverture
     if (!seule && pages.length % 2 === 0) pages.push('<div class="page page--blank"></div>');
-    pages.push('<div class="page page--back"><img src="assets/logo-phb70.svg" alt="PHB70"></div>');
+    pages.push('<div class="page page--back"><img src="/assets/logo-phb70.svg" alt="PHB70"></div>');
     // Numéros de page (hors couvertures)
     // (chaque page est un seul <div> : on ajoute le numéro juste avant sa fermeture)
     return pages.map((html, i) => {
@@ -247,15 +280,15 @@
     prevBtn.disabled = current === 0;
     nextBtn.disabled = current === lastPos();
     if (pageSeule) {
-      countEl.textContent = current === 0 ? 'Couverture'
-        : current === n - 1 ? 'Fin'
-        : `Page ${current} / ${n - 2}`;
+      countEl.textContent = current === 0 ? T.couverture
+        : current === n - 1 ? T.fin
+        : `${T.page} ${current} / ${n - 2}`;
       return;
     }
     const total = n * 2;
-    countEl.textContent = current === 0 ? 'Couverture'
-      : current === n ? 'Fin'
-      : `Pages ${current * 2 - 1}–${current * 2} / ${total - 2}`;
+    countEl.textContent = current === 0 ? T.couverture
+      : current === n ? T.fin
+      : `${T.pages} ${current * 2 - 1}–${current * 2} / ${total - 2}`;
   }
 
   function turn(dir) {

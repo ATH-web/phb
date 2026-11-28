@@ -16,7 +16,7 @@
   const bars = Array.from(slides, (_, i) => {
     const bar = document.createElement('button');
     bar.className = 'carousel__bar';
-    bar.setAttribute('aria-label', 'Aller à l\'image ' + (i + 1));
+    bar.setAttribute('aria-label', (document.documentElement.lang === 'en' ? 'Go to image ' : 'Aller à l\'image ') + (i + 1));
     const fill = document.createElement('span');
     fill.className = 'carousel__fill';
     bar.appendChild(fill);

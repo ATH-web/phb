@@ -62,6 +62,7 @@ export async function onRequestPost({ request, env }) {
   const telephone = champ('telephone');
   const message = champ('message');
   const type = TYPES[champ('type')] || '';
+  const langue = champ('langue') === 'en' ? 'Anglais (version anglaise du site)' : '';
   const consentement = data.consentement === true || champ('consentement') !== '';
 
   const erreurs = [];
@@ -82,6 +83,7 @@ export async function onRequestPost({ request, env }) {
     ['E-mail', email],
     ['Téléphone', telephone],
     ['Type de projet', type],
+    ['Langue', langue],
   ].filter(([, v]) => v);
 
   const html = `
